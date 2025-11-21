@@ -266,7 +266,8 @@ cherry
     <!-- AdSense slot -->
 
   </section>
-  
+
+  <!-- === FREE TOOL ① : 前後追加ツール === -->
   <section id="tool-prefix-suffix" style="margin-top:32px;">
     <h2 style="font-size:1.4rem; margin-bottom:10px;">前後に文字をまとめて追加</h2>
     <p class="subtitle" style="margin-bottom:14px;">
@@ -362,6 +363,137 @@ cherry
       alert("コピーしました！");
     }
   </script>
+
+  <!-- === FREE TOOL ② : 改行 ↔ カンマ変換ツール === -->
+  <section id="tool-newline-comma" style="margin-top:32px;">
+    <h2 style="font-size:1.4rem; margin-bottom:10px;">改行 ↔ カンマ区切りを変換</h2>
+    <p class="subtitle" style="margin-bottom:14px;">
+      改行で並んだ文字を「カンマ区切り」にしたり、  
+      カンマ区切りの文字を「改行一覧」に戻したりできます。
+    </p>
+  
+    <div style="
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    ">
+      <div style="display:flex; flex-direction:column; gap:14px;">
+  
+        <!-- 入力欄 -->
+        <div>
+          <label style="font-weight:700; display:block; margin-bottom:6px;">入力：</label>
+          <textarea id="inputText2" rows="6" style="
+            width:100%; padding:12px; border-radius:14px;
+            border:1px solid var(--border); font-size:1rem;
+            font-family:system-ui;
+          " placeholder="ここに文字を貼り付けてください（改行 or カンマ区切りどちらでもOK）"></textarea>
+        </div>
+  
+        <!-- オプション -->
+        <div class="card" style="background:var(--card-soft);">
+          <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <label style="font-weight:700;">変換オプション：</label>
+  
+            <label style="display:flex; align-items:center; gap:6px;">
+              <input type="checkbox" id="trimSpaces2" checked>
+              前後の空白を消す
+            </label>
+  
+            <label style="display:flex; align-items:center; gap:6px;">
+              <input type="checkbox" id="removeEmpty2" checked>
+              空行・空要素を無視
+            </label>
+          </div>
+        </div>
+  
+        <!-- ボタン -->
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button onclick="toComma()" class="btn btn-primary" style="min-width:220px;">
+            改行 → カンマ区切り
+          </button>
+  
+          <button onclick="toNewline()" class="btn" style="min-width:220px;">
+            カンマ区切り → 改行
+          </button>
+  
+          <button onclick="clearTool2()" class="btn btn-ghost">
+            クリア
+          </button>
+        </div>
+  
+        <!-- 出力 -->
+        <div>
+          <label style="font-weight:700; display:block; margin-bottom:6px;">出力：</label>
+          <textarea id="outputText2" rows="6" style="
+            width:100%; padding:12px; border-radius:14px;
+            border:1px solid var(--border); font-size:1rem;
+            font-family:ui-monospace;
+          " readonly></textarea>
+  
+          <button onclick="copyOutput2()" class="btn" style="margin-top:10px;">
+            コピーする
+          </button>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    function normalizeItems2(raw, splitByComma){
+      let items;
+      if(splitByComma){
+        items = raw.split(",");
+      }else{
+        items = raw.split(/\r?\n/);
+      }
+  
+      const trimSpaces = document.getElementById("trimSpaces2").checked;
+      const removeEmpty = document.getElementById("removeEmpty2").checked;
+  
+      items = items.map(x => trimSpaces ? x.trim() : x);
+  
+      if(removeEmpty){
+        items = items.filter(x => x !== "");
+      }
+      return items;
+    }
+  
+    function toComma(){
+      const raw = document.getElementById("inputText2").value;
+      if(!raw.trim()){
+        alert("入力欄が空です");
+        return;
+      }
+      const items = normalizeItems2(raw, false);
+      document.getElementById("outputText2").value = items.join(", ");
+    }
+  
+    function toNewline(){
+      const raw = document.getElementById("inputText2").value;
+      if(!raw.trim()){
+        alert("入力欄が空です");
+        return;
+      }
+      const items = normalizeItems2(raw, true);
+      document.getElementById("outputText2").value = items.join("\n");
+    }
+  
+    function copyOutput2(){
+      const out = document.getElementById("outputText2");
+      out.select();
+      document.execCommand("copy");
+      alert("コピーしました！");
+    }
+  
+    function clearTool2(){
+      document.getElementById("inputText2").value = "";
+      document.getElementById("outputText2").value = "";
+    }
+  </script>
+
 
   
   <!-- USE CASES -->
