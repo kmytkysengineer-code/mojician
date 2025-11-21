@@ -466,6 +466,174 @@ cherry
       </div>
     </div>
   </section>
+
+<!-- === FREE TOOL ③ : IN句メーカー === -->
+<section id="tool-in-clause" style="margin-top:32px;">
+  <h2 style="font-size:1.4rem; margin-bottom:10px;">IN句メーカー（SQL用）</h2>
+  <p class="subtitle" style="margin-bottom:14px;">
+    改行やカンマで並んだ値を、SQLの <b>IN句（IN (...)）</b> にまとめます。  
+    クォート付けもまとめてできます。
+  </p>
+
+  <div style="
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+  ">
+    <div style="display:flex; flex-direction:column; gap:14px;">
+
+      <!-- 入力欄 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">入力（改行 or カンマどちらでもOK）：</label>
+        <textarea id="inputText3" rows="6" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:system-ui;
+        " placeholder="例）
+A123
+B456
+C789"></textarea>
+      </div>
+
+      <!-- オプション -->
+      <div class="card" style="background:var(--card-soft);">
+        <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+          <label style="font-weight:700;">オプション：</label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="trimSpaces3" checked>
+            前後の空白を消す
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="removeEmpty3" checked>
+            空行・空要素を無視
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="unique3" checked>
+            重複を除去
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="addQuotes3" checked>
+            シングルクォートで囲む
+          </label>
+
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-weight:700;">区切り：</span>
+            <select id="separator3" style="
+              padding:6px 8px; border-radius:10px;
+              border:1px solid var(--border); background:white;
+            ">
+              <option value="auto" selected>自動（改行/カンマ両対応）</option>
+              <option value="newline">改行のみ</option>
+              <option value="comma">カンマのみ</option>
+              <option value="space">空白区切り（スペース）</option>
+              <option value="tab">タブ区切り</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button onclick="buildInClause()" class="btn btn-primary" style="min-width:220px;">
+          IN句を作る
+        </button>
+
+        <button onclick="clearTool3()" class="btn btn-ghost">
+          クリア
+        </button>
+      </div>
+
+      <!-- 出力 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">出力：</label>
+        <textarea id="outputText3" rows="5" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:ui-monospace;
+        " readonly></textarea>
+
+        <button onclick="copyOutput3()" class="btn" style="margin-top:10px;">
+          コピーする
+        </button>
+      </div>
+
+      <!-- 例 -->
+      <div class="example" style="font-size:0.9rem;">
+        例：<br>
+        入力： A / B / C<br>
+        出力： IN ('A','B','C')
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function splitItems3(raw){
+    const mode = document.getElementById("separator3").value;
+
+    if(mode === "newline") return raw.split(/\r?\n/);
+    if(mode === "comma") return raw.split(",");
+    if(mode === "space") return raw.split(/\s+/);
+    if(mode === "tab") return raw.split(/\t+/);
+
+    // auto: 改行があれば改行優先、なければカンマ、なければ空白
+    if(raw.includes("\n")) return raw.split(/\r?\n/);
+    if(raw.includes(",")) return raw.split(",");
+    return raw.split(/\s+/);
+  }
+
+  function normalize3(items){
+    const trimSpaces = document.getElementById("trimSpaces3").checked;
+    const removeEmpty = document.getElementById("removeEmpty3").checked;
+    const unique = document.getElementById("unique3").checked;
+
+    let arr = items.map(x => trimSpaces ? x.trim() : x);
+    if(removeEmpty) arr = arr.filter(x => x !== "");
+    if(unique){
+      const seen = new Set();
+      arr = arr.filter(x => (seen.has(x) ? false : (seen.add(x), true)));
+    }
+    return arr;
+  }
+
+  function buildInClause(){
+    const raw = document.getElementById("inputText3").value;
+    if(!raw.trim()){
+      alert("入力欄が空です");
+      return;
+    }
+
+    let items = splitItems3(raw);
+    items = normalize3(items);
+
+    const addQuotes = document.getElementById("addQuotes3").checked;
+    const quoted = items.map(x => addQuotes ? `'${x.replace(/'/g, "''")}'` : x);
+
+    document.getElementById("outputText3").value =
+      `IN (${quoted.join(",")})`;
+  }
+
+  function copyOutput3(){
+    const out = document.getElementById("outputText3");
+    out.select();
+    document.execCommand("copy");
+    alert("コピーしました！");
+  }
+
+  function clearTool3(){
+    document.getElementById("inputText3").value = "";
+    document.getElementById("outputText3").value = "";
+  }
+</script>
+
+
   
   <script>
     function normalizeItems2(raw, splitByComma){
