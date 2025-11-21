@@ -368,7 +368,7 @@ cherry
             font-family:ui-monospace;
           " readonly></textarea>
 
-          <button onclick="copyOutput()" class="btn" style="margin-top:10px;">
+          <button id="copy1" onclick="copyOutput()" class="btn copy-btn" style="margin-top:10px;">
             コピーする
           </button>
         </div>
@@ -397,7 +397,9 @@ cherry
       const out = document.getElementById("outputText");
       out.select();
       document.execCommand("copy");
-      alert("コピーしました！");
+    
+      // 現在のボタンだけ完了表示
+      setCopied("copy1");
     }
 
     function clearTool1(){
@@ -472,7 +474,7 @@ cherry
             font-family:ui-monospace;
           " readonly></textarea>
 
-          <button onclick="copyOutput2()" class="btn" style="margin-top:10px;">
+          <button id="copy2" onclick="copyOutput()" class="btn copy-btn" style="margin-top:10px;">
             コピーする
           </button>
         </div>
@@ -521,11 +523,13 @@ cherry
       document.getElementById("outputText2").value = items.join("\n");
     }
 
-    function copyOutput2(){
-      const out = document.getElementById("outputText2");
+    function copyOutput() {
+      const out = document.getElementById("outputText");
       out.select();
       document.execCommand("copy");
-      alert("コピーしました！");
+    
+      // 現在のボタンだけ完了表示
+      setCopied("copy2");
     }
 
     function clearTool2(){
@@ -604,7 +608,7 @@ cherry, banana"></textarea>
           font-family:ui-monospace;
         " readonly></textarea>
 
-        <button onclick="copyOutput3()" class="btn" style="margin-top:10px;">
+        <button id="copy3" onclick="copyOutput()" class="btn copy-btn" style="margin-top:10px;">
           コピーする
         </button>
       </div>
@@ -659,72 +663,14 @@ cherry, banana"></textarea>
     document.getElementById("outputText3").value = uniqueItems.join("\n");
   }
 
-  function copyOutput3(){
-    const out = document.getElementById("outputText3");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
-
-  function clearTool3(){
-    document.getElementById("inputText3").value = "";
-    document.getElementById("outputText3").value = "";
-  }
-</script>
-
-
-<script>
-  function splitItems3(raw){
-    const mode = document.getElementById("separator3").value;
-
-    if(mode === "newline") return raw.split(/\r?\n/);
-    if(mode === "comma") return raw.split(",");
-    if(mode === "space") return raw.split(/\s+/);
-    if(mode === "tab") return raw.split(/\t+/);
-
-    // auto: 改行があれば改行優先、なければカンマ、なければ空白
-    if(raw.includes("\n")) return raw.split(/\r?\n/);
-    if(raw.includes(",")) return raw.split(",");
-    return raw.split(/\s+/);
-  }
-
-  function deduplicateList(){
-    const raw = document.getElementById("inputText3").value;
-    if(!raw.trim()){
-      alert("入力欄が空です");
-      return;
+function copyOutput() {
+      const out = document.getElementById("outputText");
+      out.select();
+      document.execCommand("copy");
+    
+      // 現在のボタンだけ完了表示
+      setCopied("copy3");
     }
-
-    let items = splitItems3(raw);
-
-    const trimSpaces = document.getElementById("trimSpaces3").checked;
-    const removeEmpty = document.getElementById("removeEmpty3").checked;
-
-    if(trimSpaces){
-      items = items.map(x => x.trim());
-    }
-    if(removeEmpty){
-      items = items.filter(x => x !== "");
-    }
-
-    // 順番維持で重複削除
-    const seen = new Set();
-    const uniqueItems = items.filter(x => {
-      if(seen.has(x)) return false;
-      seen.add(x);
-      return true;
-    });
-
-    // 出力は改行で返す（見やすさ優先）
-    document.getElementById("outputText3").value = uniqueItems.join("\n");
-  }
-
-  function copyOutput3(){
-    const out = document.getElementById("outputText3");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
 
   function clearTool3(){
     document.getElementById("inputText3").value = "";
@@ -830,7 +776,7 @@ cherry, banana"></textarea>
           font-family:ui-monospace;
         " readonly></textarea>
 
-        <button onclick="copyTwoColJoin4()" class="btn" style="margin-top:10px;">
+        <button id="copy4" onclick="copyOutput()" class="btn copy-btn" style="margin-top:10px;">
           コピーする
         </button>
       </div>
@@ -909,12 +855,14 @@ cherry, banana"></textarea>
     document.getElementById("outputText4").value = out.join("\n");
   }
 
-  function copyTwoColJoin4(){
-    const out = document.getElementById("outputText4");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
+  function copyOutput() {
+      const out = document.getElementById("outputText");
+      out.select();
+      document.execCommand("copy");
+    
+      // 現在のボタンだけ完了表示
+      setCopied("copy4");
+    }
 
   function clearTwoColJoin4(){
     document.getElementById("leftText4").value = "";
@@ -1015,7 +963,7 @@ test"></textarea>
           font-family:ui-monospace;
         " readonly></textarea>
 
-        <button onclick="copyOutput5()" class="btn" style="margin-top:10px;">
+        <button id="copy5" onclick="copyOutput()" class="btn copy-btn" style="margin-top:10px;">
           コピーする
         </button>
       </div>
@@ -1075,12 +1023,14 @@ test"></textarea>
     document.getElementById("outputText5").value = result.join("\n");
   }
 
-  function copyOutput5(){
-    const out = document.getElementById("outputText5");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
+    function copyOutput() {
+      const out = document.getElementById("outputText");
+      out.select();
+      document.execCommand("copy");
+    
+      // 現在のボタンだけ完了表示
+      setCopied("copy5");
+    }
 
   function clearTool5(){
     document.getElementById("inputText5").value = "";
@@ -1090,6 +1040,7 @@ test"></textarea>
     document.getElementById("removeEmpty5").checked = true;
     document.getElementById("caseInsensitive5").checked = true;
   }
+  
 </script>
 
   <!-- === FREE TOOL ⑥ : 行の並び替え（ソート） === -->
@@ -1188,7 +1139,7 @@ test"></textarea>
           font-family:ui-monospace;
         " readonly></textarea>
 
-        <button onclick="copyOutput6()" class="btn" style="margin-top:10px;">
+        <button id="copy6" onclick="copyOutput()" class="btn copy-btn" style="margin-top:10px;">
           コピーする
         </button>
       </div>
@@ -1252,12 +1203,14 @@ test"></textarea>
     document.getElementById("outputText6").value = sorted.join("\n");
   }
 
-  function copyOutput6(){
-    const out = document.getElementById("outputText6");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
+    function copyOutput() {
+      const out = document.getElementById("outputText");
+      out.select();
+      document.execCommand("copy");
+    
+      // 現在のボタンだけ完了表示
+      setCopied("copy6");
+    }
 
   function clearTool6(){
     document.getElementById("inputText6").value = "";
@@ -1362,6 +1315,40 @@ test"></textarea>
     <div style="margin-top:8px;">© Mojician</div>
   </div>
 </footer>
+<script>
+function setCopied(buttonId) {
+  const btn = document.getElementById(buttonId);
+  if(!btn) return;
 
+  // 既存タイマーがある場合はリセット
+  if(btn._timer){
+    clearTimeout(btn._timer);
+  }
+
+  // ボタンをコピー完了状態に
+  btn.classList.add("copied");
+  btn.textContent = "✓ コピーしました";
+
+  // 2秒後に元に戻す
+  btn._timer = setTimeout(() => {
+    resetCopyStatus(btn);
+  }, 2000);
+}
+
+// ボタンを元に戻す
+function resetCopyStatus(btn){
+  btn.classList.remove("copied");
+  btn.textContent = "コピーする";
+  btn._timer = null;
+}
+  </script
+    <style>
+/* コピー完了時の見た目 */
+.copied {
+  background: #dff3e8 !important;
+  color: #247a46 !important;
+  border-color: #b8e6c9 !important;
+}
+</style>
 </body>
 </html>
