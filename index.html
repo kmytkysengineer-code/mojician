@@ -266,7 +266,104 @@ cherry
     <!-- AdSense slot -->
 
   </section>
+  
+  <section id="tool-prefix-suffix" style="margin-top:32px;">
+    <h2 style="font-size:1.4rem; margin-bottom:10px;">前後に文字をまとめて追加</h2>
+    <p class="subtitle" style="margin-bottom:14px;">
+      文字の前後に同じ文字をまとめて付けられます。  
+      シングルクォートで囲む、括弧でくくる、などの作業に便利です。
+    </p>
+  
+    <div style="
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    ">
+      <div style="display:flex; flex-direction:column; gap:14px;">
+  
+        <!-- 入力欄 -->
+        <div>
+          <label style="font-weight:700; display:block; margin-bottom:6px;">入力（複数行OK）：</label>
+          <textarea id="inputText" rows="6" style="
+            width:100%; padding:12px; border-radius:14px;
+            border:1px solid var(--border); font-size:1rem;
+            font-family:system-ui;
+          " placeholder="ここに加工したい文字を貼り付けてください"></textarea>
+        </div>
+  
+        <!-- 前後の文字入力 -->
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <div style="flex:1;">
+            <label style="font-weight:700; display:block; margin-bottom:6px;">前につける文字：</label>
+            <input id="prefix" type="text" style="
+              width:100%; padding:10px;
+              border-radius:14px; border:1px solid var(--border);
+              font-size:1rem;
+            " placeholder="' (シングルクォートなど)">
+          </div>
+  
+          <div style="flex:1;">
+            <label style="font-weight:700; display:block; margin-bottom:6px;">後につける文字：</label>
+            <input id="suffix" type="text" style="
+              width:100%; padding:10px;
+              border-radius:14px; border:1px solid var(--border);
+              font-size:1rem;
+            " placeholder="' (シングルクォートなど)">
+          </div>
+        </div>
+  
+        <!-- ボタン -->
+        <button onclick="runPrefixSuffix()" class="btn btn-primary" style="width:200px;">
+          変換する
+        </button>
+  
+        <!-- 出力 -->
+        <div>
+          <label style="font-weight:700; display:block; margin-bottom:6px;">出力：</label>
+          <textarea id="outputText" rows="6" style="
+            width:100%; padding:12px; border-radius:14px;
+            border:1px solid var(--border); font-size:1rem;
+            font-family:ui-monospace;
+          " readonly></textarea>
+  
+          <button onclick="copyOutput()" class="btn" style="margin-top:10px;">
+            コピーする
+          </button>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // 前後追加のメイン処理
+    function runPrefixSuffix() {
+      const text = document.getElementById("inputText").value;
+      const prefix = document.getElementById("prefix").value;
+      const suffix = document.getElementById("suffix").value;
+  
+      if (!text.trim()) {
+        alert("入力欄が空です");
+        return;
+      }
+  
+      const lines = text.split(/\r?\n/);
+      const result = lines.map(line => prefix + line + suffix).join("\n");
+      document.getElementById("outputText").value = result;
+    }
+  
+    // 出力コピー
+    function copyOutput() {
+      const out = document.getElementById("outputText");
+      out.select();
+      document.execCommand("copy");
+      alert("コピーしました！");
+    }
+  </script>
 
+  
   <!-- USE CASES -->
   <section id="usecases">
     <h2 style="font-size:1.5rem;margin-bottom:6px;">こんな時に役立ちます</h2>
