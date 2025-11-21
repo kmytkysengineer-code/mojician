@@ -504,7 +504,7 @@ cherry
     }
   </script>
 
-<!-- === FREE TOOL ③ : 重複削除ツール === -->
+<!-- === FREE TOOL ③ : 重複削除ツール（区切り選択なし） === -->
 <section id="tool-deduplicate" style="margin-top:32px;">
   <h2 style="font-size:1.4rem; margin-bottom:10px;">重複をまとめて削除</h2>
   <p class="subtitle" style="margin-bottom:14px;">
@@ -523,7 +523,9 @@ cherry
 
       <!-- 入力欄 -->
       <div>
-        <label style="font-weight:700; display:block; margin-bottom:6px;">入力（改行 or カンマどちらでもOK）：</label>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">
+          入力（改行でもカンマでもOK）：
+        </label>
         <textarea id="inputText3" rows="6" style="
           width:100%; padding:12px; border-radius:14px;
           border:1px solid var(--border); font-size:1rem;
@@ -532,11 +534,10 @@ cherry
 apple
 banana
 apple
-cherry
-banana"></textarea>
+cherry, banana"></textarea>
       </div>
 
-      <!-- オプション -->
+      <!-- オプション（シンプル版） -->
       <div class="card" style="background:var(--card-soft);">
         <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
           <label style="font-weight:700;">オプション：</label>
@@ -550,20 +551,6 @@ banana"></textarea>
             <input type="checkbox" id="removeEmpty3" checked>
             空行・空要素を無視
           </label>
-
-          <div style="display:flex; align-items:center; gap:6px;">
-            <span style="font-weight:700;">区切り：</span>
-            <select id="separator3" style="
-              padding:6px 8px; border-radius:10px;
-              border:1px solid var(--border); background:white;
-            ">
-              <option value="auto" selected>自動（改行/カンマ両対応）</option>
-              <option value="newline">改行のみ</option>
-              <option value="comma">カンマのみ</option>
-              <option value="space">空白区切り（スペース）</option>
-              <option value="tab">タブ区切り</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -602,6 +589,59 @@ banana"></textarea>
     </div>
   </div>
 </section>
+
+<script>
+  // 区切りは自動判定：改行があれば改行優先 → なければカンマ → なければ空白
+  function splitItemsAuto3(raw){
+    if(raw.includes("\n")) return raw.split(/\r?\n/);
+    if(raw.includes(",")) return raw.split(",");
+    return raw.split(/\s+/);
+  }
+
+  function deduplicateList(){
+    const raw = document.getElementById("inputText3").value;
+    if(!raw.trim()){
+      alert("入力欄が空です");
+      return;
+    }
+
+    let items = splitItemsAuto3(raw);
+
+    const trimSpaces = document.getElementById("trimSpaces3").checked;
+    const removeEmpty = document.getElementById("removeEmpty3").checked;
+
+    if(trimSpaces){
+      items = items.map(x => x.trim());
+    }
+    if(removeEmpty){
+      items = items.filter(x => x !== "");
+    }
+
+    // 順番維持で重複削除
+    const seen = new Set();
+    const uniqueItems = items.filter(x => {
+      if(seen.has(x)) return false;
+      seen.add(x);
+      return true;
+    });
+
+    // 出力は改行で返す（見やすさ優先）
+    document.getElementById("outputText3").value = uniqueItems.join("\n");
+  }
+
+  function copyOutput3(){
+    const out = document.getElementById("outputText3");
+    out.select();
+    document.execCommand("copy");
+    alert("コピーしました！");
+  }
+
+  function clearTool3(){
+    document.getElementById("inputText3").value = "";
+    document.getElementById("outputText3").value = "";
+  }
+</script>
+
 
 <script>
   function splitItems3(raw){
