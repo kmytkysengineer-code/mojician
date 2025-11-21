@@ -278,6 +278,19 @@ cherry
       </div>
     </div>
 
+    <!-- カード：⑤ 特定文字を含む行の削除 / 抽出 -->
+    <div class="card">
+      <h3>⑤ 行の削除・抽出（含む文字）</h3>
+      <p class="subtitle">
+        含まれている文字をもとに、  
+        行を「削除」または「抽出」できます。
+      </p>
+      <a href="#tool-remove-contains" class="btn btn-ghost" style="margin-top:6px;">
+        このページ内で使えます
+      </a>
+    </div>
+
+    
     <!-- 広告を置くならこの辺り -->
     <!-- AdSense slot -->
   </section>
@@ -905,6 +918,172 @@ cherry, banana"></textarea>
   }
 </script>
  
+<!-- === FREE TOOL ⑤ : 特定文字を含む行の削除 / 抽出 === -->
+<section id="tool-remove-contains" style="margin-top:32px;">
+  <h2 style="font-size:1.4rem; margin-bottom:10px;">特定の文字を含む行を削除 / 抽出</h2>
+  <p class="subtitle" style="margin-bottom:14px;">
+    指定した文字が入っている行を「消す」か「残す」かを選べます。  
+    いらない行の削除にも、必要な行の抽出にも使えます。
+  </p>
+
+  <div style="
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+  ">
+    <div style="display:flex; flex-direction:column; gap:14px;">
+
+      <!-- 入力欄 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">
+          入力（複数行OK）：
+        </label>
+        <textarea id="inputText5" rows="7" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:system-ui;
+        " placeholder="ここに文字を貼り付けてください"></textarea>
+      </div>
+
+      <!-- 条件 -->
+      <div class="card" style="background:var(--card-soft);">
+        <label style="font-weight:700; display:block; margin-bottom:6px;">
+          対象にしたい文字（1つでも複数でもOK）
+        </label>
+        <textarea id="keywords5" rows="3" style="
+          width:100%; padding:10px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:system-ui;
+        " placeholder="例）
+NG
+不要
+test"></textarea>
+        <div class="mini">
+          ※改行またはカンマ区切りで複数指定できます
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="trimSpaces5" checked>
+            前後の空白を消す
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="removeEmpty5" checked>
+            空行を無視
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="caseInsensitive5" checked>
+            大文字/小文字を区別しない
+          </label>
+        </div>
+      </div>
+
+      <!-- ボタン（2種類） -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button onclick="runFilter5('remove')" class="btn btn-primary" style="min-width:220px;">
+          含む行を削除する
+        </button>
+
+        <button onclick="runFilter5('keep')" class="btn" style="min-width:220px;">
+          含む行だけ残す（抽出）
+        </button>
+
+        <button onclick="clearTool5()" class="btn btn-ghost">
+          クリア
+        </button>
+      </div>
+
+      <!-- 出力 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">出力：</label>
+        <textarea id="outputText5" rows="7" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:ui-monospace;
+        " readonly></textarea>
+
+        <button onclick="copyOutput5()" class="btn" style="margin-top:10px;">
+          コピーする
+        </button>
+      </div>
+
+      <div class="example" style="font-size:0.9rem;">
+        例：<br>
+        対象文字：NG<br>
+        入力：OK / NGあり / OK<br>
+        削除 → OK / OK<br>
+        抽出 → NGあり
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function parseKeywords5(raw){
+    return raw
+      .split(/[\n,]/)
+      .map(x => x.trim())
+      .filter(x => x !== "");
+  }
+
+  function runFilter5(mode){
+    const rawText = document.getElementById("inputText5").value;
+    const rawKeys = document.getElementById("keywords5").value;
+
+    if(!rawText.trim()){
+      alert("入力欄が空です");
+      return;
+    }
+    if(!rawKeys.trim()){
+      alert("対象にしたい文字を入力してください");
+      return;
+    }
+
+    const trimSpaces = document.getElementById("trimSpaces5").checked;
+    const removeEmpty = document.getElementById("removeEmpty5").checked;
+    const caseInsensitive = document.getElementById("caseInsensitive5").checked;
+
+    let lines = rawText.split(/\r?\n/);
+    if(trimSpaces) lines = lines.map(x => x.trim());
+    if(removeEmpty) lines = lines.filter(x => x !== "");
+
+    const keywords = parseKeywords5(rawKeys);
+    const keysLower = caseInsensitive ? keywords.map(k => k.toLowerCase()) : keywords;
+
+    const result = lines.filter(line => {
+      const target = caseInsensitive ? line.toLowerCase() : line;
+      const hit = keysLower.some(k => k !== "" && target.includes(k));
+      // remove: ヒットしたら削除（false）
+      // keep: ヒットしたら残す（true）
+      return mode === "remove" ? !hit : hit;
+    });
+
+    document.getElementById("outputText5").value = result.join("\n");
+  }
+
+  function copyOutput5(){
+    const out = document.getElementById("outputText5");
+    out.select();
+    document.execCommand("copy");
+    alert("コピーしました！");
+  }
+
+  function clearTool5(){
+    document.getElementById("inputText5").value = "";
+    document.getElementById("keywords5").value = "";
+    document.getElementById("outputText5").value = "";
+    document.getElementById("trimSpaces5").checked = true;
+    document.getElementById("removeEmpty5").checked = true;
+    document.getElementById("caseInsensitive5").checked = true;
+  }
+</script>
+
+
   
   <!-- USE CASES -->
   <section id="usecases">
