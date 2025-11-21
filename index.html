@@ -709,12 +709,12 @@ cherry, banana"></textarea>
   }
 </script>
 
-<!-- === FREE TOOL ④ : 左右リスト結合ツール（片側1行ブロードキャスト対応） === -->
+<!-- === FREE TOOL ④ : 左右リスト結合ツール（最終仕様） === -->
 <section id="tool-two-col-join" style="margin-top:32px;">
   <h2 style="font-size:1.4rem; margin-bottom:10px;">左右のリストを行ごとに結合</h2>
   <p class="subtitle" style="margin-bottom:14px;">
     左と右に別々のリストを貼り付けるだけで、同じ行どうしを結合できます。  
-    Excelの結合関数を使わずに、パッと整形したい時に便利です。
+    片側が1行だけのときは、その文字を全行にまとめて付けられます。
   </p>
 
   <div style="
@@ -755,31 +755,15 @@ cherry, banana"></textarea>
 
       <!-- 設定 -->
       <div class="card" style="background:var(--card-soft);">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center;">
-          <div>
-            <label style="font-weight:700; display:block; margin-bottom:6px;">
-              間に入れる文字（任意）
-            </label>
-            <input id="between4" type="text" style="
-              width:100%; padding:10px;
-              border-radius:14px; border:1px solid var(--border);
-              font-size:1rem;
-            " placeholder="例）_  /  -  ,  など。空欄OK">
-          </div>
-
-          <div>
-            <label style="font-weight:700; display:block; margin-bottom:6px;">
-              行数が違うとき
-            </label>
-            <select id="mismatchMode4" style="
-              width:100%; padding:10px;
-              border-radius:14px; border:1px solid var(--border);
-              background:white; font-size:1rem;
-            ">
-              <option value="shorter" selected>短い方に合わせる（余りは無視）</option>
-              <option value="empty">足りない側は空欄で結合</option>
-            </select>
-          </div>
+        <div>
+          <label style="font-weight:700; display:block; margin-bottom:6px;">
+            間に入れる文字（任意）
+          </label>
+          <input id="between4" type="text" style="
+            width:100%; padding:10px;
+            border-radius:14px; border:1px solid var(--border);
+            font-size:1rem;
+          " placeholder="例）_  /  -  ,  など。空欄OK">
         </div>
 
         <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
@@ -798,6 +782,10 @@ cherry, banana"></textarea>
             片側が1行だけなら全行に同じ文字を付ける
           </label>
         </div>
+
+        <p class="mini" style="margin-top:8px;">
+          ※行数が違う場合、足りない側は空欄として結合します。
+        </p>
       </div>
 
       <!-- ボタン -->
@@ -844,7 +832,7 @@ cherry, banana"></textarea>
   }
 
   function runTwoColJoin4(){
-    const leftRaw = document.getElementById("leftText4").value;
+    const leftRaw  = document.getElementById("leftText4").value;
     const rightRaw = document.getElementById("rightText4").value;
 
     if(!leftRaw.trim() && !rightRaw.trim()){
@@ -852,39 +840,42 @@ cherry, banana"></textarea>
       return;
     }
 
-    const between = document.getElementById("between4").value ?? "";
-    const mismatchMode = document.getElementById("mismatchMode4").value;
+    const between    = document.getElementById("between4").value ?? "";
     const trimSpaces = document.getElementById("trimSpaces4").checked;
-    const removeEmpty = document.getElementById("removeEmpty4").checked;
-    const broadcast = document.getElementById("broadcast4").checked;
+    const removeEmpty= document.getElementById("removeEmpty4").checked;
+    const broadcast  = document.getElementById("broadcast4").checked;
 
-    const left = normalizeLines4(leftRaw, trimSpaces, removeEmpty);
+    const left  = normalizeLines4(leftRaw, trimSpaces, removeEmpty);
     const right = normalizeLines4(rightRaw, trimSpaces, removeEmpty);
 
-    // ---- 片側1行を全行に適用するモード ----
+    // 片側0行のときは、もう片側だけを出す（betweenは無視）
+    if(left.length === 0){
+      document.getElementById("outputText4").value = right.join("\n");
+      return;
+    }
+    if(right.length === 0){
+      document.getElementById("outputText4").value = left.join("\n");
+      return;
+    }
+
+    // ---- 片側1行を全行に適用（ブロードキャスト）----
     if(broadcast){
       if(left.length === 1 && right.length >= 1){
-        const l0 = left[0] ?? "";
+        const l0 = left[0];
         document.getElementById("outputText4").value =
-          right.map(r => l0 + between + (r ?? "")).join("\n");
+          right.map(r => l0 + between + r).join("\n");
         return;
       }
       if(right.length === 1 && left.length >= 1){
-        const r0 = right[0] ?? "";
+        const r0 = right[0];
         document.getElementById("outputText4").value =
-          left.map(l => (l ?? "") + between + r0).join("\n");
+          left.map(l => l + between + r0).join("\n");
         return;
       }
     }
 
-    // ---- 通常モード（行ごと結合）----
-    let maxLen;
-    if(mismatchMode === "shorter"){
-      maxLen = Math.min(left.length, right.length);
-    }else{
-      maxLen = Math.max(left.length, right.length);
-    }
-
+    // ---- 通常結合：行数が違うなら空欄で補完（最大行数に合わせる）----
+    const maxLen = Math.max(left.length, right.length);
     const out = [];
     for(let i=0; i<maxLen; i++){
       const l = left[i] ?? "";
@@ -910,130 +901,9 @@ cherry, banana"></textarea>
     document.getElementById("trimSpaces4").checked = true;
     document.getElementById("removeEmpty4").checked = true;
     document.getElementById("broadcast4").checked = true;
-    document.getElementById("mismatchMode4").value = "shorter";
   }
 </script>
-
-
-<script>
-  function normalizeLines4(raw, trimSpaces, removeEmpty){
-    let lines = raw.split(/\r?\n/);
-    if(trimSpaces) lines = lines.map(x => x.trim());
-    if(removeEmpty) lines = lines.filter(x => x !== "");
-    return lines;
-  }
-
-  function runTwoColJoin4(){
-    const leftRaw = document.getElementById("leftText4").value;
-    const rightRaw = document.getElementById("rightText4").value;
-
-    if(!leftRaw.trim() && !rightRaw.trim()){
-      alert("左か右、どちらかに入力してください");
-      return;
-    }
-
-    const between = document.getElementById("between4").value ?? "";
-    const mismatchMode = document.getElementById("mismatchMode4").value;
-    const trimSpaces = document.getElementById("trimSpaces4").checked;
-    const removeEmpty = document.getElementById("removeEmpty4").checked;
-
-    const left = normalizeLines4(leftRaw, trimSpaces, removeEmpty);
-    const right = normalizeLines4(rightRaw, trimSpaces, removeEmpty);
-
-    let maxLen;
-    if(mismatchMode === "shorter"){
-      maxLen = Math.min(left.length, right.length);
-    }else{
-      maxLen = Math.max(left.length, right.length);
-    }
-
-    const out = [];
-    for(let i=0; i<maxLen; i++){
-      const l = left[i] ?? "";
-      const r = right[i] ?? "";
-      out.push(l + between + r);
-    }
-
-    document.getElementById("outputText4").value = out.join("\n");
-  }
-
-  function copyTwoColJoin4(){
-    const out = document.getElementById("outputText4");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
-
-  function clearTwoColJoin4(){
-    document.getElementById("leftText4").value = "";
-    document.getElementById("rightText4").value = "";
-    document.getElementById("between4").value = "";
-    document.getElementById("outputText4").value = "";
-    document.getElementById("trimSpaces4").checked = true;
-    document.getElementById("removeEmpty4").checked = true;
-    document.getElementById("mismatchMode4").value = "shorter";
-  }
-</script>
-
-
-<script>
-  function runJoin4(){
-    const raw = document.getElementById("inputText4").value;
-    if(!raw.trim()){
-      alert("入力欄が空です");
-      return;
-    }
-
-    const sep = document.getElementById("joinSep4").value ?? "";
-    const prefix = document.getElementById("prefix4").value ?? "";
-    const suffix = document.getElementById("suffix4").value ?? "";
-
-    const trimSpaces = document.getElementById("trimSpaces4").checked;
-    const removeEmpty = document.getElementById("removeEmpty4").checked;
-    const keepNewline = document.getElementById("keepNewline4").checked;
-
-    let lines = raw.split(/\r?\n/);
-
-    if(trimSpaces){
-      lines = lines.map(x => x.trim());
-    }
-    if(removeEmpty){
-      lines = lines.filter(x => x !== "");
-    }
-
-    let result;
-    if(keepNewline){
-      // 各行を区切りで結合した後、改行は維持（実質、行内カンマ結合用途）
-      result = lines.join(sep + "\n");
-    }else{
-      // 全部を1本に結合
-      result = lines.join(sep);
-    }
-
-    document.getElementById("outputText4").value = prefix + result + suffix;
-  }
-
-  function copyOutput4(){
-    const out = document.getElementById("outputText4");
-    out.select();
-    document.execCommand("copy");
-    alert("コピーしました！");
-  }
-
-  function clearTool4(){
-    document.getElementById("inputText4").value = "";
-    document.getElementById("joinSep4").value = "";
-    document.getElementById("prefix4").value = "";
-    document.getElementById("suffix4").value = "";
-    document.getElementById("outputText4").value = "";
-    document.getElementById("keepNewline4").checked = false;
-    document.getElementById("trimSpaces4").checked = true;
-    document.getElementById("removeEmpty4").checked = true;
-  }
-</script>
-
-
-  
+ 
   
   <!-- USE CASES -->
   <section id="usecases">
