@@ -283,8 +283,21 @@ cherry
         <a href="#tool-remove-contains" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
 
+      <!-- カード：⑥ 行の並び替え（ソート） -->
+      <div class="card">
+        <h3>⑥ 行の並び替え（ソート）</h3>
+        <p class="subtitle">
+          改行リストを、昇順・降順で並び替えます。  
+          文字列/数値ソートも選べます。
+        </p>
+        <a href="#tool-sort-lines" class="btn btn-ghost" style="margin-top:6px;">
+          このページ内で使う
+        </a>
+      </div>
+
     </div>
 
+    
 
     
     <!-- 広告を置くならこの辺り -->
@@ -1076,6 +1089,184 @@ test"></textarea>
     document.getElementById("trimSpaces5").checked = true;
     document.getElementById("removeEmpty5").checked = true;
     document.getElementById("caseInsensitive5").checked = true;
+  }
+</script>
+
+  <!-- === FREE TOOL ⑥ : 行の並び替え（ソート） === -->
+<section id="tool-sort-lines" style="margin-top:32px;">
+  <h2 style="font-size:1.4rem; margin-bottom:10px;">行の並び替え（ソート）</h2>
+  <p class="subtitle" style="margin-bottom:14px;">
+    改行で並んだ文字を、昇順・降順で並び替えます。  
+    文字列としての並び替えと、数値としての並び替えが選べます。
+  </p>
+
+  <div style="
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+  ">
+    <div style="display:flex; flex-direction:column; gap:14px;">
+
+      <!-- 入力欄 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">入力（複数行OK）：</label>
+        <textarea id="inputText6" rows="7" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:system-ui;
+        " placeholder="例）
+3
+10
+2
+1"></textarea>
+      </div>
+
+      <!-- オプション -->
+      <div class="card" style="background:var(--card-soft);">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center;">
+          <div>
+            <label style="font-weight:700; display:block; margin-bottom:6px;">並び順：</label>
+            <select id="order6" style="
+              width:100%; padding:10px;
+              border-radius:14px; border:1px solid var(--border);
+              background:white; font-size:1rem;
+            ">
+              <option value="asc" selected>昇順（A→Z / 小→大）</option>
+              <option value="desc">降順（Z→A / 大→小）</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-weight:700; display:block; margin-bottom:6px;">ソート方法：</label>
+            <select id="mode6" style="
+              width:100%; padding:10px;
+              border-radius:14px; border:1px solid var(--border);
+              background:white; font-size:1rem;
+            ">
+              <option value="text" selected>文字列として並び替え</option>
+              <option value="number">数値として並び替え</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="trimSpaces6" checked>
+            前後の空白を消す
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="removeEmpty6" checked>
+            空行を無視
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="caseInsensitive6" checked>
+            大文字/小文字を区別しない（文字列ソート用）
+          </label>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button onclick="runSort6()" class="btn btn-primary" style="min-width:220px;">
+          並び替える
+        </button>
+        <button onclick="clearTool6()" class="btn btn-ghost">
+          クリア
+        </button>
+      </div>
+
+      <!-- 出力 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">出力：</label>
+        <textarea id="outputText6" rows="7" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:ui-monospace;
+        " readonly></textarea>
+
+        <button onclick="copyOutput6()" class="btn" style="margin-top:10px;">
+          コピーする
+        </button>
+      </div>
+
+      <div class="example" style="font-size:0.9rem;">
+        例：<br>
+        入力：3 / 10 / 2 / 1<br>
+        数値ソート・昇順 → 1 / 2 / 3 / 10
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function runSort6(){
+    const raw = document.getElementById("inputText6").value;
+    if(!raw.trim()){
+      alert("入力欄が空です");
+      return;
+    }
+
+    const order = document.getElementById("order6").value; // asc / desc
+    const mode = document.getElementById("mode6").value;   // text / number
+    const trimSpaces = document.getElementById("trimSpaces6").checked;
+    const removeEmpty = document.getElementById("removeEmpty6").checked;
+    const caseInsensitive = document.getElementById("caseInsensitive6").checked;
+
+    let lines = raw.split(/\r?\n/);
+    if(trimSpaces) lines = lines.map(x => x.trim());
+    if(removeEmpty) lines = lines.filter(x => x !== "");
+
+    let sorted;
+
+    if(mode === "number"){
+      // 数値としてソート（数値化できない行は最後に回す）
+      sorted = [...lines].sort((a, b) => {
+        const na = parseFloat(a);
+        const nb = parseFloat(b);
+        const aIsNum = !Number.isNaN(na);
+        const bIsNum = !Number.isNaN(nb);
+
+        if(aIsNum && bIsNum) return na - nb;
+        if(aIsNum && !bIsNum) return -1;
+        if(!aIsNum && bIsNum) return 1;
+        return a.localeCompare(b, "ja");
+      });
+    } else {
+      // 文字列としてソート
+      sorted = [...lines].sort((a, b) => {
+        const aa = caseInsensitive ? a.toLowerCase() : a;
+        const bb = caseInsensitive ? b.toLowerCase() : b;
+        return aa.localeCompare(bb, "ja");
+      });
+    }
+
+    if(order === "desc"){
+      sorted.reverse();
+    }
+
+    document.getElementById("outputText6").value = sorted.join("\n");
+  }
+
+  function copyOutput6(){
+    const out = document.getElementById("outputText6");
+    out.select();
+    document.execCommand("copy");
+    alert("コピーしました！");
+  }
+
+  function clearTool6(){
+    document.getElementById("inputText6").value = "";
+    document.getElementById("outputText6").value = "";
+    document.getElementById("order6").value = "asc";
+    document.getElementById("mode6").value = "text";
+    document.getElementById("trimSpaces6").checked = true;
+    document.getElementById("removeEmpty6").checked = true;
+    document.getElementById("caseInsensitive6").checked = true;
   }
 </script>
 
