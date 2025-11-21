@@ -264,12 +264,17 @@ cherry
         <a href="#tool-newline-comma" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
 
-    <div class="card">
-      <h3>③ 重複削除</h3>
-      <p class="subtitle">同じ項目が並んだリストを、重複だけ消してきれいにします。</p>
-      <a href="#tool-deduplicate" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
-    </div>
-
+      <div class="card">
+        <h3>③ 重複削除</h3>
+        <p class="subtitle">同じ項目が並んだリストを、重複だけ消してきれいにします。</p>
+        <a href="#tool-deduplicate" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+      </div>
+  
+      <div class="card">
+        <h3>④ 文字の結合</h3>
+        <p class="subtitle">改行リストを好きな区切りで1つにまとめます。</p>
+        <a href="#tool-join" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+      </div>
     </div>
 
     <!-- 広告を置くならこの辺り -->
@@ -704,6 +709,185 @@ cherry, banana"></textarea>
   }
 </script>
 
+<!-- === FREE TOOL ④ : 文字の結合ツール（Join） === -->
+<section id="tool-join" style="margin-top:32px;">
+  <h2 style="font-size:1.4rem; margin-bottom:10px;">文字をまとめて結合</h2>
+  <p class="subtitle" style="margin-bottom:14px;">
+    改行で並んだ文字を、好きな区切りでひとつにまとめます。  
+    Excelの関数を使わず、貼り付けてボタンを押すだけでOKです。
+  </p>
+
+  <div style="
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+  ">
+    <div style="display:flex; flex-direction:column; gap:14px;">
+
+      <!-- 入力欄 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">
+          入力（複数行OK）：
+        </label>
+        <textarea id="inputText4" rows="6" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:system-ui;
+        " placeholder="例）
+東京
+大阪
+名古屋"></textarea>
+      </div>
+
+      <!-- 設定 -->
+      <div class="card" style="background:var(--card-soft);">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          
+          <div>
+            <label style="font-weight:700; display:block; margin-bottom:6px;">
+              区切り文字（間に入れる文字）
+            </label>
+            <input id="joinSep4" type="text" style="
+              width:100%; padding:10px;
+              border-radius:14px; border:1px solid var(--border);
+              font-size:1rem;
+            " placeholder="例） ,  /  -  または空欄でもOK">
+            <div class="mini">空欄ならそのまま連結します</div>
+          </div>
+
+          <div>
+            <label style="font-weight:700; display:block; margin-bottom:6px;">
+              結合後の前後に付ける文字（任意）
+            </label>
+            <div style="display:flex; gap:8px;">
+              <input id="prefix4" type="text" style="
+                flex:1; padding:10px;
+                border-radius:14px; border:1px solid var(--border);
+                font-size:1rem;
+              " placeholder="前に付ける">
+              <input id="suffix4" type="text" style="
+                flex:1; padding:10px;
+                border-radius:14px; border:1px solid var(--border);
+                font-size:1rem;
+              " placeholder="後に付ける">
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="trimSpaces4" checked>
+            前後の空白を消す
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="removeEmpty4" checked>
+            空行を無視
+          </label>
+
+          <label style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" id="keepNewline4">
+            1行ずつ結合して改行を残す（行ごとにまとめたい時）
+          </label>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button onclick="runJoin4()" class="btn btn-primary" style="min-width:200px;">
+          結合する
+        </button>
+        <button onclick="clearTool4()" class="btn btn-ghost">
+          クリア
+        </button>
+      </div>
+
+      <!-- 出力 -->
+      <div>
+        <label style="font-weight:700; display:block; margin-bottom:6px;">出力：</label>
+        <textarea id="outputText4" rows="6" style="
+          width:100%; padding:12px; border-radius:14px;
+          border:1px solid var(--border); font-size:1rem;
+          font-family:ui-monospace;
+        " readonly></textarea>
+
+        <button onclick="copyOutput4()" class="btn" style="margin-top:10px;">
+          コピーする
+        </button>
+      </div>
+
+      <div class="example" style="font-size:0.9rem;">
+        例：<br>
+        入力： 東京 / 大阪 / 名古屋<br>
+        区切り：「, 」<br>
+        出力： 東京, 大阪, 名古屋
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function runJoin4(){
+    const raw = document.getElementById("inputText4").value;
+    if(!raw.trim()){
+      alert("入力欄が空です");
+      return;
+    }
+
+    const sep = document.getElementById("joinSep4").value ?? "";
+    const prefix = document.getElementById("prefix4").value ?? "";
+    const suffix = document.getElementById("suffix4").value ?? "";
+
+    const trimSpaces = document.getElementById("trimSpaces4").checked;
+    const removeEmpty = document.getElementById("removeEmpty4").checked;
+    const keepNewline = document.getElementById("keepNewline4").checked;
+
+    let lines = raw.split(/\r?\n/);
+
+    if(trimSpaces){
+      lines = lines.map(x => x.trim());
+    }
+    if(removeEmpty){
+      lines = lines.filter(x => x !== "");
+    }
+
+    let result;
+    if(keepNewline){
+      // 各行を区切りで結合した後、改行は維持（実質、行内カンマ結合用途）
+      result = lines.join(sep + "\n");
+    }else{
+      // 全部を1本に結合
+      result = lines.join(sep);
+    }
+
+    document.getElementById("outputText4").value = prefix + result + suffix;
+  }
+
+  function copyOutput4(){
+    const out = document.getElementById("outputText4");
+    out.select();
+    document.execCommand("copy");
+    alert("コピーしました！");
+  }
+
+  function clearTool4(){
+    document.getElementById("inputText4").value = "";
+    document.getElementById("joinSep4").value = "";
+    document.getElementById("prefix4").value = "";
+    document.getElementById("suffix4").value = "";
+    document.getElementById("outputText4").value = "";
+    document.getElementById("keepNewline4").checked = false;
+    document.getElementById("trimSpaces4").checked = true;
+    document.getElementById("removeEmpty4").checked = true;
+  }
+</script>
+
+
+  
   
   <!-- USE CASES -->
   <section id="usecases">
