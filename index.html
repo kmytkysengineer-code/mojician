@@ -1,11 +1,304 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>Mojician - 文字を魔法のように加工するツール</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Mojician（モジシャン）｜Excel関数いらずで文字加工を魔法のように</title>
+  <meta name="description" content="Mojician（モジシャン）は、Excel関数を覚えなくても文字列を一括加工できる無料Webツールです。SQLのIN句用クォート付与、接頭辞・接尾辞追加、事務作業のコピペ整形を秒速で。ブラウザだけで完結します。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="Mojician（モジシャン）｜文字加工を魔法のように簡単に" />
+  <meta property="og:description" content="Excel関数いらず。文字列の前後追加やSQL/Excel向け整形をブラウザで秒速処理。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mojician.jp/" />
+  <!-- og:image はロゴ作ったら差し替え -->
+  <!-- <meta property="og:image" content="https://mojician.jp/ogp.png" /> -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- ここにAdSenseのscriptを後で貼る -->
+  <!-- Google AdSense -->
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-soft:#121938;
+      --card:#0f1733;
+      --text:#e8ecf6;
+      --muted:#aab3cf;
+      --accent:#7c9cff;
+      --accent2:#8ef0d0;
+      --border:rgba(255,255,255,0.08);
+      --radius:14px;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0; font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:radial-gradient(1000px 600px at 10% -10%, #1a245e 0, transparent 60%),
+                 radial-gradient(900px 700px at 110% 10%, #143b6d 0, transparent 55%),
+                 var(--bg);
+      color:var(--text);
+      line-height:1.7;
+    }
+    a{color:var(--accent); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    header{
+      position:sticky; top:0; backdrop-filter:saturate(150%) blur(8px);
+      background:rgba(11,16,32,0.7); border-bottom:1px solid var(--border); z-index:10;
+    }
+    .wrap{max-width:1000px; margin:0 auto; padding:0 16px;}
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; padding:12px 0;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:0.3px;
+    }
+    .logo-badge{
+      width:30px; height:30px; border-radius:9px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid; place-items:center; color:#0b1020; font-weight:900;
+    }
+    .nav-links{display:flex; gap:14px; font-size:0.95rem;}
+    .hero{
+      padding:56px 0 28px;
+      display:grid; grid-template-columns:1.1fr 0.9fr; gap:18px; align-items:center;
+    }
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr; padding-top:36px;}
+    }
+    .hero-card{
+      background:linear-gradient(180deg, rgba(124,156,255,0.09), rgba(142,240,208,0.05));
+      border:1px solid var(--border);
+      border-radius:18px; padding:22px;
+    }
+    h1{font-size:2rem; margin:0 0 8px;}
+    .subtitle{color:var(--muted); font-size:1.05rem;}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+    .btn{
+      padding:10px 14px; border-radius:10px; font-weight:700; font-size:0.95rem;
+      border:1px solid var(--border); background:#16214a; color:var(--text);
+      cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--accent),#5a7bff); border:none;}
+    .btn-ghost{background:transparent;}
+    .mini{
+      font-size:0.85rem; color:var(--muted); margin-top:10px;
+    }
+
+    section{padding:22px 0;}
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+    @media (max-width:900px){.grid3{grid-template-columns:1fr;}}
+    .card{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:16px;
+    }
+    .card h3{margin:0 0 6px; font-size:1.05rem;}
+    .tag{display:inline-block; font-size:0.78rem; color:#0b1020; padding:3px 8px;
+      background:linear-gradient(135deg,var(--accent2),#b6ffd8); border-radius:999px; font-weight:700;}
+    .example{
+      background:var(--bg-soft); border:1px dashed var(--border);
+      border-radius:12px; padding:12px; font-family:ui-monospace,Consolas,monospace; font-size:0.95rem;
+      white-space:pre-wrap;
+    }
+    .two-col{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
+    .faq details{
+      background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:8px;
+    }
+    .faq summary{cursor:pointer; font-weight:700;}
+    footer{
+      margin-top:24px; padding:18px 0 30px; border-top:1px solid var(--border); color:var(--muted);
+      font-size:0.9rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Mojician</h1>
-  <p>文字加工を魔法のように簡単にするツールです。</p>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">
+      <div class="logo-badge">M</div>
+      <div>Mojician</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#tools">無料ツール</a>
+      <a href="#usecases">使いどころ</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pro">有料版</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <h1>文字加工を、魔法のように。</h1>
+      <p class="subtitle">
+        Mojician（モジシャン）は <b>Excel関数を覚えなくても</b>、  
+        文字列の整形・コピペ加工を一瞬で終わらせる無料Webツールです。
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#tools">無料で使ってみる</a>
+        <a class="btn btn-ghost" href="#pro">有料版の予定を見る</a>
+      </div>
+
+      <p class="mini">
+        ✅ ブラウザだけで完結 / ✅ 登録不要 / ✅ すぐ使える
+      </p>
+    </div>
+
+    <div class="hero-card">
+      <div class="tag">一番人気</div>
+      <h2 style="margin:8px 0 6px;font-size:1.2rem;">前後に文字を一括追加</h2>
+      <p class="subtitle" style="font-size:0.95rem;">
+        SQLのIN句作成やExcel用の結合作業で、  
+        <b>各行にクォート・カンマ・接頭辞/接尾辞</b>を付けたい時に便利です。
+      </p>
+      <div class="example">入力：
+apple
+banana
+cherry
+
+前：「'」 後：「'」
+
+出力：
+'apple'
+'banana'
+'cherry'</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="grid3">
+      <div class="card">
+        <h3>Excel関数いらず</h3>
+        <p class="subtitle">CONCATやSUBSTITUTEを覚えなくても、必要な加工をボタン一発で。</p>
+      </div>
+      <div class="card">
+        <h3>事務作業がはかどる</h3>
+        <p class="subtitle">コピペ前提の文字整形が秒速で終わるので、手作業のミスも減ります。</p>
+      </div>
+      <div class="card">
+        <h3>ブラウザ完結で安全</h3>
+        <p class="subtitle">入力データは保存しません。AIに投げたくないデータでも安心して使えます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tools">
+    <h2 style="font-size:1.4rem;margin-bottom:6px;">無料ツール</h2>
+    <p class="subtitle">まずはここから。よく使う文字加工を無料で提供します。</p>
+
+    <div class="grid3">
+      <div class="card">
+        <h3>① 前後追加（Prefix/Suffix）</h3>
+        <p class="subtitle">各行の前後に文字を追加。クォート付与や括弧付けに。</p>
+        <a href="#tools" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます（準備中）</a>
+      </div>
+      <div class="card">
+        <h3>② IN句メーカー</h3>
+        <p class="subtitle">改行リスト → SQLのIN句に一発変換。</p>
+        <span class="mini">近日公開</span>
+      </div>
+      <div class="card">
+        <h3>③ 行/カンマ変換</h3>
+        <p class="subtitle">改行↔カンマ区切りを相互変換。</p>
+        <span class="mini">近日公開</span>
+      </div>
+    </div>
+
+    <!-- 広告を置くならこの辺りが自然 -->
+    <!-- AdSense slot -->
+
+  </section>
+
+  <!-- USE CASES -->
+  <section id="usecases">
+    <h2 style="font-size:1.4rem;margin-bottom:6px;">こんな時に役立ちます</h2>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>SQLの値整形</h3>
+        <ul class="subtitle">
+          <li>IN句のために全行へシングルクォートを付けたい</li>
+          <li>カンマや括弧をまとめて付けたい</li>
+          <li>検索条件のリストをすぐ作りたい</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Excelの文字結合・整形</h3>
+        <ul class="subtitle">
+          <li>毎回同じ結合処理を関数なしでやりたい</li>
+          <li>決まった形式で貼り付ける文字列を一括生成したい</li>
+          <li>手作業のコピペ加工を減らしたい</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRO -->
+  <section id="pro">
+    <h2 style="font-size:1.4rem;margin-bottom:6px;">有料版（Mojician Pro）でやりたいこと</h2>
+    <p class="subtitle">
+      まず無料で使ってもらい、気に入った人がもっと便利に使えるように拡張します。
+    </p>
+
+    <div class="grid3">
+      <div class="card">
+        <h3>文字数・行数の制限解除</h3>
+        <p class="subtitle">大量データもサクッと加工できるように。</p>
+      </div>
+      <div class="card">
+        <h3>加工ルールの保存</h3>
+        <p class="subtitle">よく使うプレフィックス/サフィックスをプリセット化。</p>
+      </div>
+      <div class="card">
+        <h3>一括バッチ処理</h3>
+        <p class="subtitle">ファイル入力や複数ツール連携で自動化。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <h2 style="font-size:1.4rem;margin-bottom:6px;">よくある質問</h2>
+
+    <details>
+      <summary>入力したテキストは保存されますか？</summary>
+      <div class="subtitle">いいえ。Mojicianは入力データを保存しません。ブラウザで加工するだけです。</div>
+    </details>
+
+    <details>
+      <summary>AIに貼り付けるのが不安なデータでも使えますか？</summary>
+      <div class="subtitle">はい。AIサービスに送信しない設計なので、社内データや機密データでも安心です。</div>
+    </details>
+
+    <details>
+      <summary>無料でどこまで使えますか？</summary>
+      <div class="subtitle">まずは日常の事務・開発作業で頻出する文字加工を無料で提供します。増やしていきます。</div>
+    </details>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="/privacy.html">プライバシーポリシー（準備中）</a>
+      <a href="/terms.html">利用規約（準備中）</a>
+      <a href="mailto:contact@mojician.jp">お問い合わせ</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
 </body>
 </html>
