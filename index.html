@@ -392,6 +392,11 @@ cherry
       }
 
       const lines = text.split(/\r?\n/);
+      // ★ 末尾が空行（空文字 or 空白だけ）の場合は処理対象から外す
+      while (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+        lines.pop();
+      }
+      
       const result = lines.map(line => prefix + line + suffix).join("\n");
       document.getElementById("outputText").value = result;
     }
