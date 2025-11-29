@@ -499,6 +499,11 @@ cherry
 
       items = items.map(x => trimSpaces ? x.trim() : x);
 
+      // ★ 末尾が空行なら削除
+      while (items.length > 0 && items[items.length - 1].trim() === "") {
+        items.pop();
+      }
+      
       if(removeEmpty){
         items = items.filter(x => x !== "");
       }
@@ -643,6 +648,12 @@ cherry, banana"></textarea>
     if(trimSpaces){
       items = items.map(x => x.trim());
     }
+
+    // ★ 末尾が空行（空文字 or 空白だけ）の場合は処理対象から外す
+    while (items.length > 0 && items[items.length - 1].trim() === "") {
+      items.pop();
+    }
+    
     if(removeEmpty){
       items = items.filter(x => x !== "");
     }
@@ -787,6 +798,12 @@ cherry, banana"></textarea>
   function normalizeLines4(raw, trimSpaces, removeEmpty){
     let lines = raw.split(/\r?\n/);
     if(trimSpaces) lines = lines.map(x => x.trim());
+
+    // ★末尾の空行（空白含む）を削除する
+    while (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+      lines.pop();
+    }
+    
     if(removeEmpty) lines = lines.filter(x => x !== "");
     return lines;
   }
@@ -992,6 +1009,12 @@ test"></textarea>
 
     let lines = rawText.split(/\r?\n/);
     if(trimSpaces) lines = lines.map(x => x.trim());
+
+    // ★ 末尾の空行（空白含む）を削除
+    while (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+      lines.pop();
+    }
+    
     if(removeEmpty) lines = lines.filter(x => x !== "");
 
     const keywords = parseKeywords5(rawKeys);
@@ -1150,6 +1173,12 @@ test"></textarea>
 
     let lines = raw.split(/\r?\n/);
     if(trimSpaces) lines = lines.map(x => x.trim());
+
+    // ★ 末尾が空行（空文字 or 空白だけ）の場合は処理対象から外す
+    while (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+      lines.pop();
+    }
+    
     if(removeEmpty) lines = lines.filter(x => x !== "");
 
     let sorted;
