@@ -2,192 +2,531 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>Mojician Pro のご紹介｜文字列加工をもっと快適に</title>
-  <meta name="description" content="Mojician Pro は、無料版の文字列加工ツールに「条件保存」や「差分比較」「複数キーワードの一括置換」などの機能を追加した有料プランです。画面イメージと具体的な使い方をご紹介します。" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3218654889585206"
+     crossorigin="anonymous"></script>
+  <meta name="google-site-verification" content="Ap9OCYqmddWcOk52UNwb4F_uW9ItZE5Am_e5rOhie2k" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+
+  <title>Mojician Pro のご紹介｜文字列加工をもっと快適にする有料版機能</title>
+  <meta name="description" content="Mojician Pro は、無料版の文字列加工ツールに「条件保存」や「差分比較」「複数キーワードの一括置換」などの機能を追加した有料プランです。画面イメージと具体的な使い方をご紹介します。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/pro.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="Mojician Pro のご紹介｜文字列加工をもっと快適に" />
+  <meta property="og:description" content="条件保存・差分比較・複数キーワードの一括置換など、Mojician Pro の具体的な機能と画面イメージを紹介します。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mojician.jp/pro.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style>
+    :root{
+      --bg: #f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --accent3:#ffd37a;
+      --border:#e6ecfa;
+      --radius:22px;
+      --radius-sm:14px;
+      --shadow: 0 8px 24px rgba(24, 48, 114, 0.08);
+      --shadow-soft: 0 6px 18px rgba(24, 48, 114, 0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.8;
+    }
+    a{color:#3b63ff; text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:1280px; margin:0 auto; padding:0 16px;}
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:0.2px;
+    }
+    .logo-badge{
+      width:34px; height:34px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid; place-items:center; color:white; font-weight:900;
+      box-shadow: var(--shadow-soft);
+    }
+    .nav-links{display:flex; gap:12px; font-size:0.95rem; color:var(--muted);}
+    .nav-links a{
+      color:var(--muted); padding:6px 8px; border-radius:10px;
+    }
+    .nav-links a:hover{background:#eef3ff; color:var(--text); text-decoration:none;}
+    .nav-links a.active{
+      background:#e3ebff;
+      color:var(--text);
+      font-weight:700;
+    }
+
+    /* HERO（Pro用） */
+    .hero{
+      padding:44px 0 20px;
+      display:grid; grid-template-columns:1.1fr 0.9fr; gap:16px; align-items:center;
+    }
+    @media (max-width:900px){ .hero{grid-template-columns:1fr; padding-top:28px;} }
+
+    .hero-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px; padding:22px;
+      box-shadow: var(--shadow);
+    }
+    h1{font-size:2rem; margin:0 0 8px;}
+    .subtitle{color:var(--muted); font-size:1.05rem;}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+    .btn{
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:1rem;
+      border:1px solid #d6def2;
+      background:#eef3ff;
+      color:var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: var(--shadow-soft);
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      background:#e3ebff;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:white; border:none;
+    }
+    .btn-ghost{
+      background:transparent; box-shadow:none;
+    }
+    .mini{
+      font-size:0.9rem; color:var(--muted); margin-top:10px;
+    }
+
+    section{padding:20px 0;}
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+    @media (max-width:900px){.grid3{grid-template-columns:1fr;}}
+    .card{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .card h3{margin:0 0 6px; font-size:1.1rem;}
+    .two-col{display:grid; grid-template-columns:1.1fr 0.9fr; gap:16px;}
+    @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
+
+    .example{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px; padding:12px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size:0.95rem; white-space:pre-wrap;
+      color:#273656;
+    }
+
+    .table-wrapper{
+      margin-top:12px;
+      overflow-x:auto;
+    }
+    .compare-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:0.95rem;
+      background:var(--card);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: var(--shadow-soft);
+    }
+    .compare-table th,
+    .compare-table td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+    }
+    .compare-table thead{
+      background:#eef3ff;
+    }
+    .compare-table th{
+      font-weight:700;
+      font-size:0.9rem;
+      color:#273656;
+    }
+    .compare-table tr:last-child td{
+      border-bottom:none;
+    }
+    .compare-table td:nth-child(2),
+    .compare-table td:nth-child(3){
+      text-align:center;
+      width:90px;
+    }
+
+    .badge-pro{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:0.78rem;
+      color:#224066;
+      background:#e9f3ff;
+      border-radius:999px;
+      padding:4px 10px;
+      border:1px solid #d2e1ff;
+      font-weight:700;
+    }
+
+    .screenshot{
+      margin:14px 0;
+      background:var(--card-soft);
+      border-radius:18px;
+      border:1px solid var(--border);
+      padding:12px;
+      box-shadow: var(--shadow-soft);
+    }
+    .screenshot img{
+      max-width:100%;
+      border-radius:12px;
+      display:block;
+    }
+    .screenshot figcaption{
+      font-size:0.85rem;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .feature-points{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+    .feature-points li{margin-bottom:4px;}
+
+    .faq details{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px; padding:14px; margin-bottom:8px;
+      box-shadow: var(--shadow-soft);
+    }
+    .faq summary{cursor:pointer; font-weight:800;}
+
+    footer{
+      margin-top:24px; padding:18px 0 30px;
+      border-top:1px solid var(--border); color:var(--muted);
+      font-size:0.9rem;
+    }
+    .footer-links{display:flex; gap:12px; flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
 </head>
+
 <body>
-  <header class="site-header">
-    <div class="inner">
-      <a href="index.html" class="logo">Mojician</a>
-      <nav class="nav">
-        <a href="index.html">無料版トップ</a>
-        <a href="pro.html" class="active">Mojician Pro のご紹介</a>
-      </nav>
+<header>
+  <div class="wrap nav">
+    <div class="logo">
+      <div class="logo-badge">M</div>
+      <div>Mojician</div>
     </div>
-  </header>
+    <nav class="nav-links">
+      <a href="/index.html">無料ツール</a>
+      <a href="#about" class="active">Mojician Pro とは</a>
+      <a href="#features">機能紹介</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
 
-  <main class="page">
-    <section class="hero">
-      <div class="inner">
-        <h1>Mojician Pro のご紹介</h1>
-        <p class="lead">
-          Mojician Pro は、無料版の「貼り付けてボタンを押すだけ」の使いやすさはそのままに、<br />
-          毎日の文字加工をもっと楽にするための機能を追加した有料プランです。
-        </p>
-        <p class="note">
-          ※このページは Mojician Pro の画面イメージと機能を紹介する説明用ページです。<br />
-          実際のPro版は <a href="https://pro.mojician.jp/" target="_blank" rel="noopener">こちらの専用サイト</a> からご利用いただけます。
-        </p>
-      </div>
-    </section>
+<main class="wrap">
 
-    <!-- 無料版との違い -->
-    <section class="section">
-      <div class="inner">
-        <h2>無料版との違い</h2>
-        <p>
-          無料版でも基本的な文字列加工はすべて行えますが、Pro版では「よく使う設定を保存したい」「複数のキーワードをまとめて置換したい」など、日常的に使う方ほど便利になる機能を追加しています。
-        </p>
-
-        <div class="table-wrapper">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th>機能</th>
-                <th>無料版</th>
-                <th>Mojician Pro</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>基本の文字加工ツール（前後に文字を追加 / 連番付与など）</td>
-                <td>◯</td>
-                <td>◯</td>
-              </tr>
-              <tr>
-                <td>設定の条件保存（よく使うパターンを名前付きで保存）</td>
-                <td>×</td>
-                <td>◯（ツール①・④・⑤・⑧・⑨）</td>
-              </tr>
-              <tr>
-                <td>差分比較ツール（2つのテキストを比較して差分行をハイライト）</td>
-                <td>×</td>
-                <td>◯（ツール⑦）</td>
-              </tr>
-              <tr>
-                <td>文字列内の特定位置に文字を挿入</td>
-                <td>×</td>
-                <td>◯（ツール⑧）</td>
-              </tr>
-              <tr>
-                <td>複数キーワードの一括置換（辞書置換）</td>
-                <td>×</td>
-                <td>◯（ツール⑨）</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pro機能の画面例：差分比較ツール -->
-    <section class="section">
-      <div class="inner">
-        <h2>Pro専用：差分比較ツール（ツール⑦）の画面イメージ</h2>
-        <p>
-          左右にテキストを貼り付けて「差分を比較する」ボタンを押すと、行ごとに比較し、内容が異なる行だけ背景色を付けて表示します。<br />
-          WinMerge などの比較ツールのように、「どの行が違うのか」をブラウザだけで手軽に確認できます。
-        </p>
-
-        <figure class="screenshot">
-          <img src="images/mojician-pro-diff.png" alt="Mojician Pro 差分比較ツールの画面例" />
-          <figcaption>差分がある行だけ赤い背景で表示されるため、変更箇所がひと目で分かります。</figcaption>
-        </figure>
-
-        <ul class="feature-points">
-          <li>2つのテキストを行単位で比較し、差分だけを強調表示</li>
-          <li>差分がまったく無い場合は「差分はありません（全行一致しています）。」と表示</li>
-          <li>行番号も表示されるため、「○行目が違う」とすぐに把握できます</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Pro機能の画面例：複数キーワードの一括置換 -->
-    <section class="section">
-      <div class="inner">
-        <h2>Pro専用：複数キーワードの一括置換（ツール⑨）の画面イメージ</h2>
-        <p>
-          「この単語は A に、この単語は B に……」というように、複数の置換ルールをまとめて登録できます。<br />
-          何度も同じ置換を行うケースでは、条件保存機能と組み合わせることで作業を大幅に短縮できます。
-        </p>
-
-        <figure class="screenshot">
-          <img src="images/mojician-pro-dict-replace.png" alt="Mojician Pro 辞書置換ツールの画面例" />
-          <figcaption>左側に置換ルール、右側に対象テキストを貼り付けて、一括で置換します。</figcaption>
-        </figure>
-
-        <ul class="feature-points">
-          <li>「元の文字」と「置換後の文字」を一覧で登録できる</li>
-          <li>登録した置換パターンに名前を付けて保存可能（例：「社内用語→正式名称」など）</li>
-          <li>毎回同じ変換をする定型作業に向いています</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 条件保存機能の説明 -->
-    <section class="section">
-      <div class="inner">
-        <h2>条件保存機能について</h2>
-        <p>
-          Mojician Pro では、ツール①・④・⑤・⑧・⑨で「条件保存」機能が使えます。<br />
-          よく使う設定（前後につける文字、連番の形式、置換ルールなど）に名前をつけて保存しておくことで、「毎回同じ設定を入力する」手間を減らします。
-        </p>
-
-        <figure class="screenshot">
-          <img src="images/mojician-pro-preset.png" alt="Mojician Pro 条件保存機能の例" />
-          <figcaption>設定に名前を付けて保存し、プルダウンから選んで呼び出せます。</figcaption>
-        </figure>
-
-        <p class="note">
-          ※保存した条件は、ご利用中のブラウザの中に保存されます（localStorage を使用）。<br />
-          ブラウザのサイトデータを削除した場合や、別の端末・別のブラウザからは、同じ条件は表示されません。
-        </p>
-      </div>
-    </section>
-
-    <!-- よくある質問（簡易） -->
-    <section class="section">
-      <div class="inner">
-        <h2>よくある質問</h2>
-        <dl class="faq-list">
-          <dt>Q. Mojician Pro は月額いくらですか？</dt>
-          <dd>A. 月額100円、または年額980円（税込）でご利用いただけます。</dd>
-
-          <dt>Q. 支払い方法は何が使えますか？</dt>
-          <dd>A. Stripe を利用し、クレジットカードまたはデビットカードでお支払いいただけます。</dd>
-
-          <dt>Q. 解約はいつでもできますか？</dt>
-          <dd>A. はい、いつでも「プラン」ページから解約いただけます。解約後も、契約期間の終了日までは Pro 機能をご利用いただけます。</dd>
-        </dl>
-      </div>
-    </section>
-
-    <!-- 無料版への導線 -->
-    <section class="section">
-      <div class="inner">
-        <h2>まずは無料版からお試しください</h2>
-        <p>
-          Mojician Pro は、無料版を使い慣れてからアップグレードしていただくことを想定しています。<br />
-          まずは無料版のツールで操作感を試していただき、「もっと作業を楽にしたい」と感じたタイミングで Pro をご検討いただければ嬉しいです。
-        </p>
-        <p>
-          ▶ <a href="index.html">無料版 Mojician を使ってみる</a>
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="inner">
-      <p class="footer-links">
-        <a href="privacy.html">プライバシーポリシー</a> /
-        <a href="terms.html">利用規約</a> /
-        <a href="contact.html">お問い合わせ</a>
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div>
+      <h1>Mojician Pro のご紹介<br>毎日の文字加工をもっと楽に</h1>
+      <p class="subtitle">
+        Mojician Pro は、無料版の「貼り付けてボタンを押すだけ」の使いやすさはそのままに、<br>
+        <b>よく使う設定の保存</b> や <b>テキスト差分比較</b>、<b>複数キーワードの一括置換</b> などの機能を追加した有料版です。
       </p>
-      <p class="copy">© 2025 Mojician. All rights reserved.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://pro.mojician.jp/" target="_blank" rel="noopener">
+          Mojician Pro を開く
+        </a>
+        <a class="btn btn-ghost" href="/index.html">
+          まずは無料版を試してみる
+        </a>
+      </div>
+
+      <p class="mini">
+        ※このページは Mojician Pro の画面イメージと機能を紹介する説明用ページです。<br>
+        実際のご利用は <a href="https://pro.mojician.jp/" target="_blank" rel="noopener">https://pro.mojician.jp/</a> から行えます。
+      </p>
     </div>
-  </footer>
+
+    <div class="hero-card">
+      <h2 style="margin:8px 0 6px;font-size:1.2rem;">無料版との違い（ざっくり）</h2>
+      <p class="subtitle" style="font-size:0.98rem;">
+        無料版ですでに基本の文字加工はできますが、<br>
+        「毎日使う」「似た加工を何度も行う」方ほど Pro 版のメリットが大きくなります。
+      </p>
+      <ul class="feature-points">
+        <li>よく使う設定を名前付きで保存（条件保存機能）</li>
+        <li>テキスト差分を行ごとに比較（差分比較ツール）</li>
+        <li>複数キーワードをまとめて一括置換（辞書置換ツール）</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 無料版との違い -->
+  <section>
+    <h2 style="font-size:1.5rem;margin-bottom:6px;">無料版との違い</h2>
+    <p class="subtitle">
+      無料版 Mojician でも、前後追加・改行とカンマ変換・重複削除・行の並び替えなど、日常で使う文字加工はひと通り行えます。<br>
+      Mojician Pro では、さらに「頻繁に使う人ほどラクになる」機能を追加しています。
+    </p>
+
+    <div class="table-wrapper">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>機能</th>
+            <th>無料版</th>
+            <th>Mojician Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>基本の文字加工ツール（前後追加 / 改行変換 / 重複削除 など）</td>
+            <td>◯</td>
+            <td>◯</td>
+          </tr>
+          <tr>
+            <td>条件保存機能（よく使う設定に名前を付けて保存）</td>
+            <td>×</td>
+            <td>◯（ツール①・④・⑤・⑧・⑨）</td>
+          </tr>
+          <tr>
+            <td>差分比較ツール（2つのテキストの違いを行単位で表示）</td>
+            <td>×</td>
+            <td>◯（ツール⑦）</td>
+          </tr>
+          <tr>
+            <td>文字列内の特定位置への挿入（n文字目に文字を挿入）</td>
+            <td>×</td>
+            <td>◯（ツール⑧）</td>
+          </tr>
+          <tr>
+            <td>複数キーワードの一括置換（辞書置換）</td>
+            <td>×</td>
+            <td>◯（ツール⑨）</td>
+          </tr>
+          <tr>
+            <td>Pro専用ツールの追加・改善</td>
+            <td>―</td>
+            <td>◯（今後も順次追加予定）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AdSense を置くならこの辺りにブロックを追加してもOK -->
+  </section>
+
+  <!-- Pro機能の画面例：差分比較ツール -->
+  <section id="features">
+    <h2 style="font-size:1.5rem;margin-bottom:6px;">代表的な Pro 機能</h2>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>差分比較ツール（ツール⑦）</h3>
+        <p class="subtitle">
+          左右にテキストを貼り付けて「差分を比較する」ボタンを押すと、<br>
+          行ごとに比較し、内容が異なる行だけを色付きで表示します。
+        </p>
+        <ul class="feature-points">
+          <li>2つのテキストを行単位で比較して差分を表示</li>
+          <li>差分がある行のみ背景色が付き、変更箇所が一目で分かる</li>
+          <li>行番号も表示されるため、「何行目が違うか」がすぐに把握できます</li>
+          <li>差分が1つもない場合は「差分はありません（全行一致しています）。」と表示</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="screenshot">
+          <!-- 実際のPro画面キャプチャを置き換えてください -->
+          <img src="images/mojician-pro-diff.png" alt="Mojician Pro 差分比較ツールの画面例">
+          <figcaption>差分がある行だけ赤い背景で表示されるため、どこが変わったのかがひと目で分かります。</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:20px;">
+      <div class="card">
+        <h3>複数キーワードの一括置換（ツール⑨）</h3>
+        <p class="subtitle">
+          「この単語は A に、この単語は B に…」というように、<br>
+          複数の置換ルールを一覧で登録して、一度に置換できます。
+        </p>
+        <ul class="feature-points">
+          <li>「元の文字」と「置換後の文字」を行ごとに登録</li>
+          <li>登録した置換パターンに名前を付けて保存（条件保存）</li>
+          <li>社内用語を正式名称に変換する、表記ゆれを直す、といった作業に便利</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="screenshot">
+          <!-- 実際のPro画面キャプチャを置き換えてください -->
+          <img src="images/mojician-pro-dict-replace.png" alt="Mojician Pro 複数キーワード一括置換ツールの画面例">
+          <figcaption>左側に置換ルール、右側に対象テキストを貼り付けて、一括で置換できます。</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:20px;">
+      <div class="card">
+        <h3>文字列内の特定位置に文字を挿入（ツール⑧）</h3>
+        <p class="subtitle">
+          「各行の3文字目の後ろにハイフンを入れたい」など、<br>
+          文字列の特定の位置に同じ文字を挿入したい場合に使います。
+        </p>
+        <ul class="feature-points">
+          <li>「n文字目の後に挿入」といった指定が可能</li>
+          <li>指定位置が行の長さと同じ場合は末尾に追加</li>
+          <li>指定位置が行の長さより大きい場合にどうするかも選択可能</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="screenshot">
+          <!-- 実際のPro画面キャプチャを置き換えてください -->
+          <img src="images/mojician-pro-insert-position.png" alt="Mojician Pro 文字挿入ツールの画面例">
+          <figcaption>挿入したい位置と文字を指定しておくことで、繰り返しの作業をワンクリックで行えます。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 条件保存機能 -->
+  <section>
+    <h2 style="font-size:1.5rem;margin-bottom:6px;">条件保存機能について</h2>
+    <p class="subtitle">
+      Mojician Pro では、ツール①・④・⑤・⑧・⑨で「条件保存」機能が使えます。<br>
+      よく使う設定（前後につける文字、結合の形式、抽出条件、置換ルールなど）に名前を付けて保存しておくことで、<br>
+      <b>「いつもと同じ設定」をワンクリックで呼び出せます。</b>
+    </p>
+
+    <div class="two-col">
+      <div>
+        <figure class="screenshot">
+          <!-- 実際のPro画面キャプチャを置き換えてください -->
+          <img src="images/mojician-pro-preset.png" alt="Mojician Pro 条件保存機能の例">
+          <figcaption>保存した条件はプルダウンから選択して、すぐに適用できます。</figcaption>
+        </figure>
+      </div>
+      <div class="card">
+        <h3>ブラウザの中だけに保存されます</h3>
+        <p class="subtitle">
+          条件保存は、ブラウザの <code>localStorage</code> を使って、<br>
+          ご利用中の端末・ブラウザの中にだけ保存されます。
+        </p>
+        <ul class="feature-points">
+          <li>サーバー側には送信・保存されません</li>
+          <li>ブラウザのサイトデータを削除すると、保存した条件も消えます</li>
+          <li>別の端末や別のブラウザでは、同じ条件は自動では表示されません</li>
+        </ul>
+        <p class="mini">
+          ※そのため、普段よく使う PC／ブラウザでのご利用をおすすめします。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <h2 style="font-size:1.5rem;margin-bottom:6px;">Mojician Pro に関するよくある質問</h2>
+
+    <details>
+      <summary>有料版はいくらですか？</summary>
+      <div class="subtitle">
+        月額100円、または年額980円（税込）でご利用いただけるようにしています。<br>
+        実際の料金やキャンペーン情報は、Pro版サイト内の「プラン」ページをご確認ください。
+      </div>
+    </details>
+
+    <details>
+      <summary>支払い方法は何が使えますか？</summary>
+      <div class="subtitle">
+        Stripe を利用し、クレジットカード / デビットカードでお支払いいただけます。
+      </div>
+    </details>
+
+    <details>
+      <summary>解約はいつでもできますか？</summary>
+      <div class="subtitle">
+        はい。Mojician Pro の「プラン」ページから、いつでも解約いただけます。<br>
+        解約後も、契約期間の終了日までは Pro 機能をご利用いただけます。
+      </div>
+    </details>
+
+    <details>
+      <summary>無料版は今まで通り使えますか？</summary>
+      <div class="subtitle">
+        はい。無料版は今まで通り、そのままお使いいただけます。<br>
+        まずは無料版で操作に慣れていただき、「もっと効率化したい」と感じたタイミングで Pro を検討していただければ嬉しいです。
+      </div>
+    </details>
+  </section>
+
+  <!-- 無料版への導線 -->
+  <section>
+    <h2 style="font-size:1.5rem;margin-bottom:6px;">まずは無料版からお試しください</h2>
+    <p class="subtitle">
+      Mojician Pro は、無料版 Mojician を日常的に使っていただく方に向けた拡張プランです。<br>
+      「とりあえずどんな感じか試してみたい」という場合は、まずは無料版から触ってみてください。
+    </p>
+    <div class="card" style="margin-top:8px;">
+      <p class="subtitle" style="margin-bottom:8px;">
+        ▶ <a href="/index.html">無料版 Mojician を開く</a>
+      </p>
+      <p class="mini">
+        無料版でも、前後追加・改行変換・重複削除・行の並び替えなど、基本的な文字加工はそのままご利用いただけます。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="mailto:info@factorylance.jp">お問い合わせ</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
 </body>
 </html>
