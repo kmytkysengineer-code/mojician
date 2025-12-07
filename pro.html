@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mojician Pro のご紹介｜文字列加工をもっと快適に</title>
+  <meta name="description" content="Mojician Pro は、無料版の文字列加工ツールに「条件保存」や「差分比較」「複数キーワードの一括置換」などの機能を追加した有料プランです。画面イメージと具体的な使い方をご紹介します。" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <a href="index.html" class="logo">Mojician</a>
+      <nav class="nav">
+        <a href="index.html">無料版トップ</a>
+        <a href="pro.html" class="active">Mojician Pro のご紹介</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="inner">
+        <h1>Mojician Pro のご紹介</h1>
+        <p class="lead">
+          Mojician Pro は、無料版の「貼り付けてボタンを押すだけ」の使いやすさはそのままに、<br />
+          毎日の文字加工をもっと楽にするための機能を追加した有料プランです。
+        </p>
+        <p class="note">
+          ※このページは Mojician Pro の画面イメージと機能を紹介する説明用ページです。<br />
+          実際のPro版は <a href="https://pro.mojician.jp/" target="_blank" rel="noopener">こちらの専用サイト</a> からご利用いただけます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 無料版との違い -->
+    <section class="section">
+      <div class="inner">
+        <h2>無料版との違い</h2>
+        <p>
+          無料版でも基本的な文字列加工はすべて行えますが、Pro版では「よく使う設定を保存したい」「複数のキーワードをまとめて置換したい」など、日常的に使う方ほど便利になる機能を追加しています。
+        </p>
+
+        <div class="table-wrapper">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>機能</th>
+                <th>無料版</th>
+                <th>Mojician Pro</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>基本の文字加工ツール（前後に文字を追加 / 連番付与など）</td>
+                <td>◯</td>
+                <td>◯</td>
+              </tr>
+              <tr>
+                <td>設定の条件保存（よく使うパターンを名前付きで保存）</td>
+                <td>×</td>
+                <td>◯（ツール①・④・⑤・⑧・⑨）</td>
+              </tr>
+              <tr>
+                <td>差分比較ツール（2つのテキストを比較して差分行をハイライト）</td>
+                <td>×</td>
+                <td>◯（ツール⑦）</td>
+              </tr>
+              <tr>
+                <td>文字列内の特定位置に文字を挿入</td>
+                <td>×</td>
+                <td>◯（ツール⑧）</td>
+              </tr>
+              <tr>
+                <td>複数キーワードの一括置換（辞書置換）</td>
+                <td>×</td>
+                <td>◯（ツール⑨）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pro機能の画面例：差分比較ツール -->
+    <section class="section">
+      <div class="inner">
+        <h2>Pro専用：差分比較ツール（ツール⑦）の画面イメージ</h2>
+        <p>
+          左右にテキストを貼り付けて「差分を比較する」ボタンを押すと、行ごとに比較し、内容が異なる行だけ背景色を付けて表示します。<br />
+          WinMerge などの比較ツールのように、「どの行が違うのか」をブラウザだけで手軽に確認できます。
+        </p>
+
+        <figure class="screenshot">
+          <img src="images/mojician-pro-diff.png" alt="Mojician Pro 差分比較ツールの画面例" />
+          <figcaption>差分がある行だけ赤い背景で表示されるため、変更箇所がひと目で分かります。</figcaption>
+        </figure>
+
+        <ul class="feature-points">
+          <li>2つのテキストを行単位で比較し、差分だけを強調表示</li>
+          <li>差分がまったく無い場合は「差分はありません（全行一致しています）。」と表示</li>
+          <li>行番号も表示されるため、「○行目が違う」とすぐに把握できます</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Pro機能の画面例：複数キーワードの一括置換 -->
+    <section class="section">
+      <div class="inner">
+        <h2>Pro専用：複数キーワードの一括置換（ツール⑨）の画面イメージ</h2>
+        <p>
+          「この単語は A に、この単語は B に……」というように、複数の置換ルールをまとめて登録できます。<br />
+          何度も同じ置換を行うケースでは、条件保存機能と組み合わせることで作業を大幅に短縮できます。
+        </p>
+
+        <figure class="screenshot">
+          <img src="images/mojician-pro-dict-replace.png" alt="Mojician Pro 辞書置換ツールの画面例" />
+          <figcaption>左側に置換ルール、右側に対象テキストを貼り付けて、一括で置換します。</figcaption>
+        </figure>
+
+        <ul class="feature-points">
+          <li>「元の文字」と「置換後の文字」を一覧で登録できる</li>
+          <li>登録した置換パターンに名前を付けて保存可能（例：「社内用語→正式名称」など）</li>
+          <li>毎回同じ変換をする定型作業に向いています</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 条件保存機能の説明 -->
+    <section class="section">
+      <div class="inner">
+        <h2>条件保存機能について</h2>
+        <p>
+          Mojician Pro では、ツール①・④・⑤・⑧・⑨で「条件保存」機能が使えます。<br />
+          よく使う設定（前後につける文字、連番の形式、置換ルールなど）に名前をつけて保存しておくことで、「毎回同じ設定を入力する」手間を減らします。
+        </p>
+
+        <figure class="screenshot">
+          <img src="images/mojician-pro-preset.png" alt="Mojician Pro 条件保存機能の例" />
+          <figcaption>設定に名前を付けて保存し、プルダウンから選んで呼び出せます。</figcaption>
+        </figure>
+
+        <p class="note">
+          ※保存した条件は、ご利用中のブラウザの中に保存されます（localStorage を使用）。<br />
+          ブラウザのサイトデータを削除した場合や、別の端末・別のブラウザからは、同じ条件は表示されません。
+        </p>
+      </div>
+    </section>
+
+    <!-- よくある質問（簡易） -->
+    <section class="section">
+      <div class="inner">
+        <h2>よくある質問</h2>
+        <dl class="faq-list">
+          <dt>Q. Mojician Pro は月額いくらですか？</dt>
+          <dd>A. 月額100円、または年額980円（税込）でご利用いただけます。</dd>
+
+          <dt>Q. 支払い方法は何が使えますか？</dt>
+          <dd>A. Stripe を利用し、クレジットカードまたはデビットカードでお支払いいただけます。</dd>
+
+          <dt>Q. 解約はいつでもできますか？</dt>
+          <dd>A. はい、いつでも「プラン」ページから解約いただけます。解約後も、契約期間の終了日までは Pro 機能をご利用いただけます。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 無料版への導線 -->
+    <section class="section">
+      <div class="inner">
+        <h2>まずは無料版からお試しください</h2>
+        <p>
+          Mojician Pro は、無料版を使い慣れてからアップグレードしていただくことを想定しています。<br />
+          まずは無料版のツールで操作感を試していただき、「もっと作業を楽にしたい」と感じたタイミングで Pro をご検討いただければ嬉しいです。
+        </p>
+        <p>
+          ▶ <a href="index.html">無料版 Mojician を使ってみる</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p class="footer-links">
+        <a href="privacy.html">プライバシーポリシー</a> /
+        <a href="terms.html">利用規約</a> /
+        <a href="contact.html">お問い合わせ</a>
+      </p>
+      <p class="copy">© 2025 Mojician. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
