@@ -226,6 +226,21 @@ cherry
     </div>
   </section>
 
+  <section class="card" style="margin-bottom:20px;">
+    <h2>Mojicianとは？</h2>
+    <p class="subtitle">
+      Mojician（モジシャン）は、文字列の加工・整形を
+      ブラウザだけで簡単に行える無料Webツールです。
+    </p>
+    <p class="subtitle">
+      Excel関数やプログラミングの知識がなくても、
+      コピペとボタン操作だけで文字をまとめて加工できます。
+      事務作業・データ整理・SQL作成前の下処理など、
+      日常業務のちょっとした手間を減らすことを目的に作りました。
+    </p>
+  </section>
+
+  
   <!-- FEATURES -->
   <section>
     <div class="grid3">
@@ -253,6 +268,11 @@ cherry
       <div class="card">
         <h3>① 前後追加（Prefix/Suffix）</h3>
         <p class="subtitle">文字の最初や最後に、同じ文字をまとめて付けられます。</p>
+        <p class="subtitle">
+  このツールは、各行の文字列に同じ記号や文字を一括で付けたい場合に便利です。
+  SQLのIN句作成、CSVデータの整形、引用符で囲む作業などを、
+  手作業せずにまとめて行えます。
+</p>
         <p class="mini" style="margin-top:4px;">例）apple → 'apple'</p>
         <a href="#tool-prefix-suffix" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
@@ -260,6 +280,12 @@ cherry
       <div class="card">
         <h3>② 改行 ↔ カンマ変換</h3>
         <p class="subtitle">改行をカンマ区切りにしたり、逆に戻したりできます。</p>
+        <p class="subtitle">
+  改行で並んだリストをカンマ区切りにしたり、
+  逆にカンマ区切りの文字列を改行リストに戻したりできます。
+  Excelやシステムへの貼り付け前の整形作業に役立ちます。
+</p>
+
         <p class="mini" style="margin-top:4px;">例）改行「A↵B↵C」→「A, B, C」</p>
         <a href="#tool-newline-comma" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
@@ -267,6 +293,12 @@ cherry
       <div class="card">
         <h3>③ 重複削除</h3>
         <p class="subtitle">同じ項目が並んだリストを、重複だけ消してきれいにします。</p>
+        <p class="subtitle">
+  このツールは、一覧データの中に含まれる重複項目をまとめて削除します。
+  順番はそのまま維持されるため、
+  名簿・リスト・データ整理の前処理として安心して使えます。
+</p>
+
         <p class="mini" style="margin-top:4px;">例）apple, banana, apple → apple, banana</p>
         <a href="#tool-deduplicate" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
@@ -274,6 +306,12 @@ cherry
       <div class="card">
         <h3>④ 文字の結合</h3>
         <p class="subtitle">左右のリストを行ごとに結合します。</p>
+        <p class="subtitle">
+  左右に分かれた2つのリストを、行ごとに結合できます。
+  拠点名＋部署名、ID＋名称など、
+  2列データを1つの文字列にまとめたい場合に便利です。
+</p>
+
         <p class="mini" style="margin-top:4px;">例）左：A / B　右：X → A_X / B_X</p>
         <a href="#tool-two-col-join" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
@@ -281,6 +319,12 @@ cherry
       <div class="card">
         <h3>⑤ 行の削除・抽出（含む文字）</h3>
         <p class="subtitle">含まれている文字をもとに、行を「削除」または「抽出」できます。</p>
+        <p class="subtitle">
+  指定した文字を含む行だけを削除したり、逆に抽出したりできます。
+  NGデータの除外や、条件に合う行だけを取り出すなど、
+  データチェックや整理作業に役立ちます。
+</p>
+
         <p class="mini" style="margin-top:4px;">例）「NG」を含む行だけ抽出 / 削除</p>
         <a href="#tool-remove-contains" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
@@ -291,9 +335,15 @@ cherry
           改行リストを、昇順・降順で並び替えます。  
           文字列/数値ソートも選べます。
         </p>
+        <p class="subtitle">
+  改行で並んだデータを昇順・降順に並び替えます。
+  数値としての並び替えにも対応しているため、
+  IDや番号リストの整理にも使えます。
+</p>
+
         <p class="mini" style="margin-top:4px;">例）3 ↵ 10 ↵ 2 ↵ 1 → 1 / 2 / 3 / 10</p>
         <a href="#tool-sort-lines" class="btn btn-ghost" style="margin-top:6px;">
-          このページ内で使う
+          このページ内で使えます
         </a>
       </div>
 
@@ -1300,6 +1350,18 @@ test"></textarea>
       </div>
     </details>
 
+    <details>
+      <summary>Mojicianはどんな人に向いていますか？</summary>
+        <div class="subtitle">
+          Mojicianは、文字列をまとめて加工・整理したい方に向けたツールです。
+          特に、Excel関数やプログラミングが苦手な方でも、
+          コピペとボタン操作だけで文字を整えたい場合に役立ちます。
+          <br><br>
+          事務作業やデータ整理を行う方、リスト作成やチェック作業が多い方、
+          SQLやシステムに貼り付ける前の文字整形を行う方などにおすすめです。
+        </div>
+    </details>
+    
     <details>
       <summary>パソコンが苦手でも使えますか？</summary>
       <div class="subtitle">
