@@ -435,7 +435,7 @@ cherry
         </div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button onclick="runPrefixSuffix()" class="btn btn-primary" style="min-width:200px;">
+          <button onclick="runPrefixSuffix()gtag('event', 'tool_run', { tool: 'prefix_suffix' });" class="btn btn-primary" style="min-width:200px;">
             変換する
           </button>
 
@@ -536,11 +536,11 @@ cherry
         </div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button onclick="toComma()" class="btn btn-primary" style="min-width:220px;">
+          <button onclick="toComma() gtag('event', 'tool_run', { tool: 'toComma' });" class="btn btn-primary" style="min-width:220px;">
             改行 → カンマ区切り
           </button>
 
-          <button onclick="toNewline()" class="btn" style="min-width:220px;">
+          <button onclick="toNewline() gtag('event', 'tool_run', { tool: 'toNewline' });" class="btn" style="min-width:220px;">
             カンマ区切り → 改行
           </button>
 
@@ -672,7 +672,7 @@ cherry, banana"></textarea>
 
       <!-- ボタン -->
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button onclick="deduplicateList()" class="btn btn-primary" style="min-width:220px;">
+        <button onclick="deduplicateList() gtag('event', 'tool_run', { tool: 'deduplicateList' });" class="btn btn-primary" style="min-width:220px;">
           重複を削除する
         </button>
 
@@ -842,7 +842,7 @@ cherry, banana"></textarea>
 
       <!-- ボタン -->
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button onclick="runTwoColJoin4()" class="btn btn-primary" style="min-width:220px;">
+        <button onclick="runTwoColJoin4() gtag('event', 'tool_run', { tool: 'runTwoColJoin' });" class="btn btn-primary" style="min-width:220px;">
           行ごとに結合する
         </button>
         <button onclick="clearTwoColJoin4()" class="btn btn-ghost">
@@ -1024,11 +1024,11 @@ test"></textarea>
 
       <!-- ボタン（2種類） -->
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button onclick="runFilter5('remove')" class="btn btn-primary" style="min-width:220px;">
+        <button onclick="runFilter5('remove') gtag('event', 'tool_run', { tool: 'Remove_Filter' });" class="btn btn-primary" style="min-width:220px;">
           含む行を削除する
         </button>
 
-        <button onclick="runFilter5('keep')" class="btn" style="min-width:220px;">
+        <button onclick="runFilter5('keep') gtag('event', 'tool_run', { tool: 'Keep_Filter' });" class="btn" style="min-width:220px;">
           含む行だけ残す（抽出）
         </button>
 
@@ -1206,7 +1206,7 @@ test"></textarea>
 
       <!-- ボタン -->
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button onclick="runSort6()" class="btn btn-primary" style="min-width:220px;">
+        <button onclick="runSort6() gtag('event', 'tool_run', { tool: 'Sort' });" class="btn btn-primary" style="min-width:220px;">
           並び替える
         </button>
         <button onclick="clearTool6()" class="btn btn-ghost">
