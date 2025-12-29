@@ -86,39 +86,6 @@
     .nav-links a{color:var(--muted); padding:6px 8px; border-radius:10px;}
     .nav-links a:hover{background:#eef3ff; color:var(--text); text-decoration:none;}
 
-    /* ===== カード差別化用 ===== */
-
-    /* 説明用（導入）カード */
-    .card-intro {
-      background: linear-gradient(135deg, #eef3ff, #f6fffb);
-      border: 3px solid red;
-      box-shadow: 0 14px 36px rgba(24, 48, 114, 0.14);
-      position: relative;
-      padding-top: 28px;
-    }
-
-    /* Proカード */
-    .card-pro {
-      background: #f9fbff;
-    }
-
-    .card-pro h3 {
-      font-weight: 900;
-    }
-
-    /* 強調カード（1枚だけ使う） */
-    .card-highlight {
-      border: 2px solid var(--accent);
-    }
-
-    /* Proカード用タグ */
-    .tag-pro {
-      background: linear-gradient(135deg, #6f92ff, #7ddac6);
-      color: #fff;
-      border: none;
-    }
-
-
     /* HERO */
     .hero{
       padding:44px 0 20px;
@@ -199,6 +166,38 @@
     .two-col{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
     @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
 
+    /* ===== カード差別化用 ===== */
+
+    /* 説明用（導入）カード */
+    .card-intro {
+      background: linear-gradient(135deg, #eef3ff, #f6fffb);
+      border: none;
+      box-shadow: 0 14px 36px rgba(24, 48, 114, 0.14);
+      position: relative;
+      padding-top: 28px;
+    }
+
+    /* Proカード */
+    .card-pro {
+      background: #f9fbff;
+    }
+
+    .card-pro h3 {
+      font-weight: 900;
+    }
+
+    /* 強調カード（1枚だけ使う） */
+    .card-highlight {
+      border: 2px solid var(--accent);
+    }
+
+    /* Proカード用タグ */
+    .tag-pro {
+      background: linear-gradient(135deg, #6f92ff, #7ddac6);
+      color: #fff;
+      border: none;
+    }
+    
     .subtitle li{margin-bottom:6px;}
 
     .faq details{
