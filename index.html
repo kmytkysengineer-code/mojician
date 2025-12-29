@@ -168,24 +168,22 @@
 
     /* ===== カード差別化用 ===== */
 
-    /* 説明用（導入）カード */
-    .card-intro {
-      background: linear-gradient(135deg, #eef3ff, #f6fffb);
-      border: none;
-      box-shadow: 0 14px 36px rgba(24, 48, 114, 0.14);
+    /* Mojicianとは？ 用の導入カード */
+    .card.card-intro {
       position: relative;
-      padding-top: 28px;
+      padding-top: 52px; /* 帯の分だけ余白を増やす */
     }
-
+    
+    /* 上部アクセント帯 */
     .card.card-intro::before {
-      content: "ABOUT";
+      content: "ABOUT MOJICIAN";
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 36px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
+      color: #ffffff;
       font-weight: 800;
       font-size: 0.8rem;
       display: flex;
@@ -193,6 +191,7 @@
       padding-left: 16px;
       border-radius: 22px 22px 0 0;
     }
+
     
     /* Proカード */
     .card-pro {
