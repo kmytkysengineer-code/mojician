@@ -86,6 +86,39 @@
     .nav-links a{color:var(--muted); padding:6px 8px; border-radius:10px;}
     .nav-links a:hover{background:#eef3ff; color:var(--text); text-decoration:none;}
 
+    /* ===== カード差別化用 ===== */
+
+    /* 説明用（導入）カード */
+    .card-intro {
+      background: linear-gradient(135deg, #eef3ff, #f6fffb);
+      border: none;
+      box-shadow: 0 14px 36px rgba(24, 48, 114, 0.14);
+      position: relative;
+      padding-top: 28px;
+    }
+
+    /* Proカード */
+    .card-pro {
+      background: #f9fbff;
+    }
+
+    .card-pro h3 {
+      font-weight: 900;
+    }
+
+    /* 強調カード（1枚だけ使う） */
+    .card-highlight {
+      border: 2px solid var(--accent);
+    }
+
+    /* Proカード用タグ */
+    .tag-pro {
+      background: linear-gradient(135deg, #6f92ff, #7ddac6);
+      color: #fff;
+      border: none;
+    }
+
+
     /* HERO */
     .hero{
       padding:44px 0 20px;
@@ -244,7 +277,7 @@ cherry
     </div>
   </section>
 
-  <section class="card" style="margin-bottom:20px;">
+  <section class="card card-intro" style="margin-bottom:20px;">
     <h2>Mojicianとは？</h2>
     <p class="subtitle">
       Mojician（モジシャン）は、文字列の加工・整形を
@@ -375,47 +408,55 @@ cherry
       </div>
     </div>
 
+    <br>
+
     <h2 style="font-size:1.5rem;margin-bottom:6px;">Pro版ツール（さらに便利に使いたい方へ）</h2>
     <p class="subtitle">
-      ①特定機能に条件保存機能が加わっています。
+      無料ツールで慣れてきた方向けに、  
+      <b>作業時間を大きく短縮できる機能</b>を用意しています。
     </p>
     <p class="subtitle">
-      ②作業効率をさらに上げるPro版ツールも用意しています。
+      条件保存や差分比較など、  
+      実務で「あと一歩ほしい」機能をまとめました。
     </p>
     
     <div class="grid3">
-      <div class="card">
-        <h3>テキスト差分比較（Pro）</h3>
+      <div class="card card-pro card-highlight">
+        <span class="tag tag-pro">Pro</span>
+        <h3>テキスト差分比較</h3>
         <p class="subtitle">
           2つのテキストを左右に並べて比較し、
           違いがある行だけを分かりやすく表示します。
         </p>
-        <p class="subtitle">
-          修正前後の確認やチェック作業に便利です。
+        <p class="mini">
+          例）修正前 / 修正後のチェック
         </p>
       </div>
+
       
-      <div class="card">
-        <h3>特定位置に文字を挿入（Pro）</h3>
+      <div class="card card-pro">
+        <span class="tag tag-pro">Pro</span>
+        <h3>特定位置に文字を挿入</h3>
         <p class="subtitle">
           各行の決まった位置に、同じ文字をまとめて挿入できます。
         </p>
-        <p class="subtitle">
-          桁位置が決まっているコードや、
-          固定フォーマットの文字列を扱うときに便利です。
+        <p class="mini">
+          例）ABC123 → ABC-123
         </p>
       </div>
+
       
-      <div class="card">
-        <h3>複数キーワードの一括置換（Pro）</h3>
+      <div class="card card-pro">
+        <span class="tag tag-pro">Pro</span>
+        <h3>複数キーワードの一括置換</h3>
         <p class="subtitle">
-          あらかじめ決めた対応表（辞書）を使って、
-          文字をまとめて置き換えられます。
+          対応表（辞書）を使って、文字をまとめて置き換えます。
         </p>
-        <p class="subtitle">
-          用語変換や表記ゆれの修正に役立ちます。
+        <p class="mini">
+          例）東京 → TOKYO / 大阪 → OSAKA
         </p>
       </div>
+
     </div>
   
     <div style="margin: 20px 0; text-align:center;">
