@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>改行↔カンマ変換｜改行リストとカンマ区切りを相互変換する無料ツール - Mojician</title>
-  <meta name="description" content="Mojicianの改行↔カンマ変換ツールは、改行で並んだ文字列をカンマ区切りに、またはその逆に変換できる無料Webツールです。SQLのIN句作成、Excel貼り付け前の整形、設定値リスト作成に便利。登録不要・ブラウザ完結・非保存。" />
+  <meta name="description" content="Mojicianの改行↔カンマ変換は、改行で並んだ文字列をカンマ区切りに、またはその逆に変換できる無料Webツールです。SQLのIN句作成、Excel貼り付け前の整形、設定値リスト作成に便利。登録不要・ブラウザ完結・非保存。" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://mojician.jp/tool/newline-comma.html" />
 
   <!-- OGP -->
-  <meta property="og:title" content="改行↔カンマ変換｜無料で使える文字列整形ツール - Mojician" />
-  <meta property="og:description" content="改行リストとカンマ区切りを相互に変換。貼り付けてボタンを押すだけ。非保存・ブラウザ完結。" />
+  <meta property="og:title" content="改行↔カンマ変換｜改行リストとカンマ区切りを相互変換する無料ツール - Mojician" />
+  <meta property="og:description" content="改行とカンマ区切りを相互変換。貼り付けてボタンを押すだけ。非保存・ブラウザ完結。" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://mojician.jp/tool/newline-comma.html" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -28,6 +28,7 @@
   </script>
 
   <style>
+    /* ===== prefix-suffix.html と完全共通 ===== */
     :root{
       --bg:#f4f8ff;
       --bg-grad-1:#eaf2ff;
@@ -75,7 +76,7 @@
       display:grid;place-items:center;color:#fff;font-weight:900;
       box-shadow:var(--shadow-soft);
     }
-    .nav-links{display:flex;gap:10px;flex-wrap:wrap;}
+    .nav-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
     .nav-links a{
       color:var(--muted);
       padding:6px 8px;border-radius:10px;font-size:.95rem;
@@ -83,15 +84,20 @@
     .nav-links a:hover{background:#eef3ff;color:var(--text);text-decoration:none;}
 
     main{padding:18px 0 30px;}
-    section{padding:14px 0;}
-    h1{font-size:1.8rem;margin:0 0 6px;line-height:1.3;}
-    h2{font-size:1.25rem;margin:0 0 6px;}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    h1{margin:0 0 6px;font-size:1.8rem;line-height:1.3;}
     .lead{color:var(--muted);margin:0;}
-    .mini{font-size:.92rem;color:var(--muted);}
     .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
     .btn{
-      padding:12px 16px;border-radius:14px;font-weight:900;
-      font-size:1rem;border:1px solid #d6def2;
+      padding:12px 16px;border-radius:14px;
+      font-weight:900;font-size:1rem;
+      border:1px solid #d6def2;
       background:#eef3ff;color:var(--text);
       cursor:pointer;display:inline-flex;align-items:center;gap:8px;
       box-shadow:var(--shadow-soft);
@@ -101,6 +107,10 @@
       background:linear-gradient(135deg,var(--accent),#5a78ff);
       color:#fff;border:none;
     }
+    .btn-ghost{background:transparent;box-shadow:none;}
+    .mini{font-size:.92rem;color:var(--muted);}
+
+    section{padding:14px 0;}
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -110,6 +120,13 @@
     }
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
     @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:.82rem;color:#3a4a6b;
+      padding:5px 10px;background:#f2f6ff;
+      border-radius:999px;font-weight:900;
+      border:1px solid var(--border);
+    }
     .example{
       background:var(--card-soft);
       border:1px dashed #d9e2fb;
@@ -120,6 +137,17 @@
       white-space:pre-wrap;
       color:#273656;
     }
+    .steps ol{margin:8px 0 0 22px;}
+    .steps li{margin:6px 0;}
+    .faq details{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:8px;
+      box-shadow:var(--shadow-soft);
+    }
+    .faq summary{cursor:pointer;font-weight:900;}
     footer{
       margin-top:18px;padding:18px 0 28px;
       border-top:1px solid var(--border);
@@ -140,7 +168,7 @@
     <nav class="nav-links">
       <a href="/">ホーム</a>
       <a href="/#tools">ツール一覧</a>
-      <a href="/pro.html">有料版（Pro）</a>
+      <a href="/pro.html" onclick="gtag('event','pro_click',{from:'tool_page_nav'});">有料版（Pro）</a>
       <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
     </nav>
   </div>
@@ -149,12 +177,13 @@
 <main class="wrap">
 
   <!-- HERO -->
-  <section class="card">
-    <h1>改行 ↔ カンマ区切りを相互に変換</h1>
+  <section class="hero">
+    <span class="tag">無料ツール</span>
+    <h1>改行 ↔ カンマ変換<br>文字リストを用途に合わせて整形</h1>
     <p class="lead">
       改行で並んだ文字列を <b>カンマ区切り</b> に、  
       カンマ区切りの文字列を <b>改行リスト</b> に変換できます。  
-      Excel・SQL・システム貼り付け前の整形に便利です。
+      SQL・Excel・システム貼り付け前の整形を、手作業なしで行えます。
     </p>
 
     <div class="cta-row">
@@ -163,6 +192,12 @@
          onclick="gtag('event','tool_open',{tool:'newline_comma',from:'tool_page_hero'});">
         ▶ 今すぐツールを使う
       </a>
+
+      <a class="btn btn-ghost"
+         href="/#tools"
+         onclick="gtag('event','nav_click',{to:'tools_list',from:'tool_page_hero'});">
+        他の無料ツールを見る
+      </a>
     </div>
 
     <p class="mini" style="margin-top:10px;">
@@ -170,26 +205,32 @@
     </p>
   </section>
 
-  <!-- 使いどころ -->
+  <!-- どんなときに使う？ -->
   <section>
     <div class="grid2">
       <div class="card">
-        <h2>どんなときに使う？</h2>
+        <h2 style="margin:0 0 6px;">どんなときに使う？</h2>
+        <p class="mini" style="margin:0;">
+          「区切り形式を変えたい」場面で特に役立ちます。
+        </p>
         <ul class="mini" style="margin:10px 0 0 18px;">
           <li>SQLの <b>IN句</b> 用にカンマ区切りを作りたい</li>
-          <li>Excelの列を <b>一覧形式</b> に戻したい</li>
-          <li>設定値やIDリストを <b>貼り付け用</b> に整えたい</li>
-          <li>改行とカンマを何度も手作業で直している</li>
+          <li>Excelの列を <b>一覧表示</b> に戻したい</li>
+          <li>設定値・IDリストを <b>貼り付け用</b> に整えたい</li>
+          <li>改行とカンマを何度も手で直している</li>
         </ul>
       </div>
 
       <div class="card">
-        <h2>よくある悩み</h2>
+        <h2 style="margin:0 0 6px;">よくある悩み</h2>
+        <p class="mini" style="margin:0;">
+          地味だけど、ミスが出やすい作業です。
+        </p>
         <ul class="mini" style="margin:10px 0 0 18px;">
-          <li>改行とカンマが混ざっていて整理が面倒</li>
-          <li>余計な空白や空行が入ってエラーになる</li>
-          <li>Excel関数を毎回考えるのが手間</li>
-          <li>少量でも頻度が高く、地味に時間を取られる</li>
+          <li>余計な空白や空要素が混ざってエラーになる</li>
+          <li>Excel関数を毎回考えるのが面倒</li>
+          <li>コピペ後に形式が崩れてやり直しになる</li>
+          <li>少量でも頻度が高く、時間を取られる</li>
         </ul>
       </div>
     </div>
@@ -198,11 +239,11 @@
   <!-- 例 -->
   <section>
     <div class="card">
-      <h2>変換例</h2>
+      <h2 style="margin:0 0 8px;">具体例（よくあるパターン）</h2>
 
       <div class="grid2">
         <div>
-          <p class="mini"><b>改行 → カンマ区切り</b></p>
+          <p class="mini" style="margin:0 0 8px;"><b>例1：改行 → カンマ区切り</b></p>
           <div class="example">入力：
 A
 B
@@ -213,7 +254,7 @@ A, B, C</div>
         </div>
 
         <div>
-          <p class="mini"><b>カンマ区切り → 改行</b></p>
+          <p class="mini" style="margin:0 0 8px;"><b>例2：カンマ区切り → 改行</b></p>
           <div class="example">入力：
 A, B, C
 
@@ -231,11 +272,11 @@ C</div>
   </section>
 
   <!-- 使い方 -->
-  <section>
+  <section class="steps">
     <div class="card">
-      <h2>使い方（3ステップ）</h2>
-      <ol class="mini" style="margin-left:18px;">
-        <li>文字列を貼り付けます（改行でもカンマでもOK）</li>
+      <h2 style="margin:0 0 6px;">使い方（3ステップ）</h2>
+      <ol class="mini">
+        <li>文字列を貼り付けます（改行・カンマどちらでもOK）</li>
         <li>変換方向を選びます</li>
         <li>変換ボタンを押して、結果をコピーします</li>
       </ol>
@@ -250,18 +291,56 @@ C</div>
     </div>
   </section>
 
-  <!-- Pro（軽く触れるだけ） -->
+  <!-- Pro導線 -->
   <section>
-    <div class="card">
-      <h2>さらに効率化したい場合</h2>
-      <p class="mini">
-        繰り返し使う整形条件を保存したい場合や、
-        差分チェック・一括置換なども行いたい場合は Mojician Pro が便利です。
+    <div class="card" style="background:linear-gradient(135deg,#ffffff,#f7fbff);">
+      <h2 style="margin:0 0 6px;">もっと効率化したい場合</h2>
+      <p class="mini" style="margin:0;">
+        条件保存や差分チェック、一括置換なども行いたい場合は Mojician Pro が便利です。
       </p>
+
+      <ul class="mini" style="margin:10px 0 0 18px;">
+        <li>テキスト差分比較（修正前/修正後のチェック）</li>
+        <li>特定位置への文字挿入</li>
+        <li>辞書置換（対応表でまとめて置換）</li>
+      </ul>
+
       <div class="cta-row">
-        <a class="btn btn-primary" href="/pro.html">🚀 Proの機能を見る</a>
+        <a class="btn btn-primary"
+           href="/pro.html"
+           onclick="gtag('event','pro_click',{from:'tool_page_pro_card'});">
+          🚀 Proの機能を見る
+        </a>
+        <a class="btn btn-ghost"
+           href="https://pro.mojician.jp/auth/signin">
+          🔑 Proユーザーはログイン
+        </a>
       </div>
+
+      <p class="mini" style="margin-top:10px;">
+        ※ まずは無料で十分。必要になったらProでOK、という設計です。
+      </p>
     </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2 style="font-size:1.3rem;margin:0 0 8px;">よくある質問</h2>
+
+    <details>
+      <summary>入力した文字は保存されますか？</summary>
+      <div class="mini">
+        いいえ。Mojicianは入力データを保存しません。ブラウザ内で加工して表示します。
+      </div>
+    </details>
+
+    <details>
+      <summary>改行とカンマが混ざっていても使えますか？</summary>
+      <div class="mini">
+        はい。自動で判別して変換できます。前後の空白や空要素もまとめて整理できます。
+      </div>
+    </details>
+
   </section>
 
 </main>
