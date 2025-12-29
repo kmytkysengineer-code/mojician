@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>前後追加（Prefix/Suffix）｜文字列を一括で囲む・付ける無料ツール - Mojician</title>
+  <meta name="description" content="Mojicianの前後追加（Prefix/Suffix）は、各行の文字列に同じ文字を一括で付ける無料Webツールです。SQLのIN句作成、引用符で囲む、括弧でくくる、CSV整形などの実務に便利。登録不要・ブラウザ完結・非保存。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/tool/prefix-suffix.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="前後追加（Prefix/Suffix）｜文字列を一括で囲む・付ける無料ツール - Mojician" />
+  <meta property="og:description" content="SQLのIN句、引用符、括弧、記号付けを一括化。貼り付けてボタンを押すだけ。非保存・ブラウザ完結。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mojician.jp/tool/prefix-suffix.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- GA4（既存と同じID想定） -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK8NJSP8SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NK8NJSP8SY');
+  </script>
+
+  <style>
+    :root{
+      --bg: #f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --border:#e6ecfa;
+      --radius:22px;
+      --shadow: 0 8px 24px rgba(24, 48, 114, 0.08);
+      --shadow-soft: 0 6px 18px rgba(24, 48, 114, 0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.8;
+    }
+    a{color:#3b63ff; text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:980px; margin:0 auto; padding:0 16px;}
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:10px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900;
+    }
+    .logo-badge{
+      width:34px; height:34px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid; place-items:center; color:white;
+      box-shadow: var(--shadow-soft);
+      font-weight:900;
+    }
+    .nav-links{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .nav-links a{
+      color:var(--muted);
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:0.95rem;
+    }
+    .nav-links a:hover{background:#eef3ff; color:var(--text); text-decoration:none;}
+
+    main{padding:18px 0 30px;}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    h1{margin:0 0 6px; font-size:1.8rem; line-height:1.3;}
+    .lead{color:var(--muted); margin:0;}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+    .btn{
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:1rem;
+      border:1px solid #d6def2;
+      background:#eef3ff;
+      color:var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px); background:#e3ebff;}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:white; border:none;
+    }
+    .btn-ghost{background:transparent; box-shadow:none;}
+    .mini{font-size:0.92rem; color:var(--muted);}
+
+    section{padding:14px 0;}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    @media (max-width:900px){.grid2{grid-template-columns:1fr;}}
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:0.82rem; color:#3a4a6b; padding:5px 10px;
+      background:#f2f6ff; border-radius:999px; font-weight:900;
+      border:1px solid var(--border);
+    }
+    .example{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size:0.95rem;
+      white-space:pre-wrap;
+      color:#273656;
+    }
+    .steps ol{margin:8px 0 0 22px;}
+    .steps li{margin:6px 0;}
+    .faq details{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:8px;
+      box-shadow: var(--shadow-soft);
+    }
+    .faq summary{cursor:pointer; font-weight:900;}
+    footer{
+      margin-top:18px; padding:18px 0 28px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+    .footer-links{display:flex; gap:12px; flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo">
+      <div class="logo-badge">M</div>
+      <div>Mojician</div>
+    </div>
+    <nav class="nav-links">
+      <a href="/">ホーム</a>
+      <a href="/#tools">ツール一覧</a>
+      <a href="/pro.html" onclick="gtag('event','pro_click',{from:'tool_page_nav'});">有料版（Pro）</a>
+      <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="tag">無料ツール</span>
+    <h1>前後追加（Prefix/Suffix）<br>各行の文字列に同じ文字をまとめて付ける</h1>
+    <p class="lead">
+      例えば、<b>引用符で囲む</b>・<b>括弧でくくる</b>・<b>SQL用に整形する</b>など、
+      1行ずつ手作業でやると面倒な加工を、貼り付けてボタン1回で終わらせます。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary"
+         href="/#tool-prefix-suffix"
+         onclick="gtag('event','tool_open',{tool:'prefix_suffix',from:'tool_page_hero'});">
+        ▶ 今すぐツールを使う
+      </a>
+
+      <a class="btn btn-ghost"
+         href="/#tools"
+         onclick="gtag('event','nav_click',{to:'tools_list',from:'tool_page_hero'});">
+        他の無料ツールを見る
+      </a>
+    </div>
+
+    <p class="mini" style="margin-top:10px;">
+      ✅ 登録不要 / ✅ ブラウザ完結 / ✅ 入力データは保存しません
+    </p>
+  </section>
+
+  <!-- どんなときに使う？ -->
+  <section>
+    <div class="grid2">
+      <div class="card">
+        <h2 style="margin:0 0 6px;">どんなときに使う？</h2>
+        <p class="mini" style="margin:0;">
+          「同じ形にそろえる」作業で特に活躍します。
+        </p>
+        <ul class="mini" style="margin:10px 0 0 18px;">
+          <li>SQLの <b>IN句</b> を作りたい（例：'A','B','C'）</li>
+          <li>CSV貼り付け前に <b>引用符</b> を付けたい（例："apple"）</li>
+          <li>記号・括弧で <b>まとめて囲みたい</b>（例：【AAA】）</li>
+          <li>ログや一覧を、コピーしやすい形に <b>整形したい</b></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:0 0 6px;">よくある悩み</h2>
+        <p class="mini" style="margin:0;">
+          こういう「地味に時間が取られる」やつです。
+        </p>
+        <ul class="mini" style="margin:10px 0 0 18px;">
+          <li>Excelで列を作って、結合して、またコピーするのが面倒</li>
+          <li>途中でコピペミスして、SQLが動かない</li>
+          <li>データは機密なので、AIチャットに貼りたくない</li>
+          <li>少量でも毎日やるから、積み上がってつらい</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 例 -->
+  <section>
+    <div class="card">
+      <h2 style="margin:0 0 8px;">具体例（よくあるパターン）</h2>
+
+      <div class="grid2">
+        <div>
+          <p class="mini" style="margin:0 0 8px;"><b>例1：シングルクォートで囲む（SQL用）</b></p>
+          <div class="example">入力：
+apple
+banana
+cherry
+
+前：'
+後：'
+
+出力：
+'apple'
+'banana'
+'cherry'</div>
+        </div>
+
+        <div>
+          <p class="mini" style="margin:0 0 8px;"><b>例2：【】で囲んで見やすくする</b></p>
+          <div class="example">入力：
+A123
+B456
+C789
+
+前：【 
+後：】
+
+出力：
+【A123】
+【B456】
+【C789】</div>
+        </div>
+      </div>
+
+      <p class="mini" style="margin-top:12px;">
+        ※ Mojicianは入力データを保存しません。ブラウザ内で加工して、その場で結果を表示します。
+      </p>
+    </div>
+  </section>
+
+  <!-- 使い方 -->
+  <section class="steps">
+    <div class="card">
+      <h2 style="margin:0 0 6px;">使い方（3ステップ）</h2>
+      <ol class="mini">
+        <li>加工したい文字を、改行区切りで貼り付けます</li>
+        <li>「前につける文字」「後につける文字」を入力します</li>
+        <li>変換ボタンを押して、結果をコピーします</li>
+      </ol>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="/#tool-prefix-suffix"
+           onclick="gtag('event','tool_open',{tool:'prefix_suffix',from:'tool_page_steps'});">
+          ▶ 前後追加ツールを開く
+        </a>
+
+        <a class="btn"
+           href="/tool/newline-comma.html"
+           onclick="gtag('event','internal_link',{to:'/tool/newline-comma.html',from:'tool_page_steps'});">
+          改行↔カンマ変換も見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pro導線（押し売りしない） -->
+  <section>
+    <div class="card" style="background:linear-gradient(135deg,#ffffff,#f7fbff);">
+      <h2 style="margin:0 0 6px;">もっと効率化したい場合</h2>
+      <p class="mini" style="margin:0;">
+        「この整形を何度も繰り返す」「差分チェックもしたい」など、
+        <b>もう一歩ラクにしたい</b>人向けに Mojician Pro があります。
+      </p>
+
+      <ul class="mini" style="margin:10px 0 0 18px;">
+        <li>テキスト差分比較（修正前/修正後のチェック）</li>
+        <li>特定位置への文字挿入（例：ABC123 → ABC-123）</li>
+        <li>辞書置換（対応表でまとめて置換）</li>
+      </ul>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="/pro.html"
+           onclick="gtag('event','pro_click',{from:'tool_page_pro_card'});">
+          🚀 Proの機能を見る
+        </a>
+        <a class="btn btn-ghost"
+           href="https://pro.mojician.jp/auth/signin">
+          🔑 Proユーザーはログイン
+        </a>
+      </div>
+
+      <p class="mini" style="margin-top:10px;">
+        ※ まずは無料で十分。必要になったらProでOK、という設計です。
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2 style="font-size:1.3rem;margin:0 0 8px;">よくある質問</h2>
+
+    <details>
+      <summary>入力した文字は保存されますか？</summary>
+      <div class="mini">
+        いいえ。Mojicianは入力データを保存しません。ブラウザ内で加工して表示します。
+      </div>
+    </details>
+
+    <details>
+      <summary>どんな形式で貼り付ければいいですか？</summary>
+      <div class="mini">
+        基本は「1行=1項目」の改行区切りがおすすめです。Excelの列をそのままコピーして貼り付けてもOKです。
+      </div>
+    </details>
+
+    <details>
+      <summary>ブックマーク（#tool-prefix-suffix）は今後も使えますか？</summary>
+      <div class="mini">
+        はい。このツールはトップページ内の「前後追加」セクション（#tool-prefix-suffix）で動きます。
+        このページの「ツールを使う」ボタンからも同じ場所へ移動できます。
+      </div>
+    </details>
+  </section>
+
+  <!-- 広告は審査が安定するまで「置かない」推奨（必要ならここに配置） -->
+  <!--
+  <section>
+    <div class="card">
+      <p class="mini" style="margin:0;">スポンサーリンク</p>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </section>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="mailto:info@factorylance.jp">お問い合わせ</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
+</body>
+</html>
