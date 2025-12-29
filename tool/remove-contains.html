@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>部分一致削除｜指定した文字を含む行を削除する無料ツール - Mojician</title>
+  <meta name="description" content="Mojicianの部分一致削除ツールは、指定した文字列を含む行をまとめて削除できる無料Webツールです。不要データの除外、ログ整形、CSV前処理などの実務に便利。登録不要・ブラウザ完結・非保存。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/tool/remove-contains.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="部分一致削除｜指定した文字を含む行を削除する無料ツール - Mojician" />
+  <meta property="og:description" content="指定キーワードを含む行を一括削除。貼り付けて条件を入れるだけ。非保存・ブラウザ完結。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mojician.jp/tool/remove-contains.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK8NJSP8SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NK8NJSP8SY');
+  </script>
+
+  <style>
+    /* ===== 共通スタイル（他ツールページと完全同一） ===== */
+    :root{
+      --bg:#f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --border:#e6ecfa;
+      --radius:22px;
+      --shadow:0 8px 24px rgba(24,48,114,0.08);
+      --shadow-soft:0 6px 18px rgba(24,48,114,0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.8;
+    }
+    a{color:#3b63ff;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:980px;margin:0 auto;padding:0 16px;}
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 0;gap:10px;
+    }
+    .logo{display:flex;align-items:center;gap:10px;font-weight:900;}
+    .logo-badge{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid;place-items:center;color:#fff;font-weight:900;
+      box-shadow:var(--shadow-soft);
+    }
+    .nav-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    .nav-links a{
+      color:var(--muted);
+      padding:6px 8px;border-radius:10px;font-size:.95rem;
+    }
+    .nav-links a:hover{background:#eef3ff;color:var(--text);text-decoration:none;}
+
+    main{padding:18px 0 30px;}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    h1{margin:0 0 6px;font-size:1.8rem;line-height:1.3;}
+    .lead{color:var(--muted);margin:0;}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+    .btn{
+      padding:12px 16px;border-radius:14px;
+      font-weight:900;font-size:1rem;
+      border:1px solid #d6def2;
+      background:#eef3ff;color:var(--text);
+      cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+      box-shadow:var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px);background:#e3ebff;}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:#fff;border:none;
+    }
+    .btn-ghost{background:transparent;box-shadow:none;}
+    .mini{font-size:.92rem;color:var(--muted);}
+
+    section{padding:14px 0;}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:.82rem;color:#3a4a6b;
+      padding:5px 10px;background:#f2f6ff;
+      border-radius:999px;font-weight:900;
+      border:1px solid var(--border);
+    }
+    .example{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      font-family:ui-monospace,Consolas,monospace;
+      font-size:.95rem;
+      white-space:pre-wrap;
+      color:#273656;
+    }
+    .steps ol{margin:8px 0 0 22px;}
+    .steps li{margin:6px 0;}
+    .faq details{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:8px;
+      box-shadow:var(--shadow-soft);
+    }
+    .faq summary{cursor:pointer;font-weight:900;}
+    footer{
+      margin-top:18px;padding:18px 0 28px;
+      border-top:1px solid var(--border);
+      color:var(--muted);font-size:.9rem;
+    }
+    .footer-links{display:flex;gap:12px;flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo">
+      <div class="logo-badge">M</div>
+      <div>Mojician</div>
+    </div>
+    <nav class="nav-links">
+      <a href="/">ホーム</a>
+      <a href="/#tools">ツール一覧</a>
+      <a href="/pro.html" onclick="gtag('event','pro_click',{from:'tool_page_nav'});">有料版（Pro）</a>
+      <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="tag">無料ツール</span>
+    <h1>部分一致削除<br>指定した文字を含む行をまとめて削除</h1>
+    <p class="lead">
+      指定したキーワードを <b>含む行だけ</b> をまとめて削除できます。  
+      不要データの除外、ログ整理、CSV前処理などを、  
+      目視や手作業なしで行えます。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary"
+         href="/#tool-remove-contains"
+         onclick="gtag('event','tool_open',{tool:'remove_contains',from:'tool_page_hero'});">
+        ▶ 今すぐツールを使う
+      </a>
+
+      <a class="btn btn-ghost"
+         href="/#tools"
+         onclick="gtag('event','nav_click',{to:'tools_list',from:'tool_page_hero'});">
+        他の無料ツールを見る
+      </a>
+    </div>
+
+    <p class="mini" style="margin-top:10px;">
+      ✅ 登録不要 / ✅ ブラウザ完結 / ✅ 入力データは保存しません
+    </p>
+  </section>
+
+  <!-- どんなときに使う？ -->
+  <section>
+    <div class="grid2">
+      <div class="card">
+        <h2 style="margin:0 0 6px;">どんなときに使う？</h2>
+        <p class="mini" style="margin:0;">
+          「不要な行を除外したい」場面で活躍します。
+        </p>
+        <ul class="mini" style="margin:10px 0 0 18px;">
+          <li>ログから <b>特定キーワード</b> を含む行を消したい</li>
+          <li>CSVから <b>不要データ</b> を除外したい</li>
+          <li>テスト用データやコメント行を削除したい</li>
+          <li>Excelでフィルタを使うほどでもない作業</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:0 0 6px;">よくある悩み</h2>
+        <p class="mini" style="margin:0;">
+          条件指定が多いと、ミスが出やすい作業です。
+        </p>
+        <ul class="mini" style="margin:10px 0 0 18px;">
+          <li>検索して1行ずつ削除している</li>
+          <li>削除漏れや削除しすぎが起きる</li>
+          <li>目視確認で時間がかかる</li>
+          <li>少量でも頻繁に発生する</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 例 -->
+  <section>
+    <div class="card">
+      <h2 style="margin:0 0 8px;">具体例（よくあるパターン）</h2>
+
+      <div class="grid2">
+        <div>
+          <p class="mini" style="margin:0 0 8px;"><b>例：指定文字を含む行を削除</b></p>
+          <div class="example">入力：
+INFO: start
+DEBUG: value=1
+INFO: end
+DEBUG: value=2
+
+削除条件：DEBUG
+
+出力：
+INFO: start
+INFO: end</div>
+        </div>
+
+        <div>
+          <p class="mini" style="margin:0 0 8px;"><b>部分一致で判定</b></p>
+          <div class="example">※ 指定文字を「含む」行が対象です</div>
+        </div>
+      </div>
+
+      <p class="mini" style="margin-top:12px;">
+        ※ 空行は自動で無視されます。
+      </p>
+    </div>
+  </section>
+
+  <!-- 使い方 -->
+  <section class="steps">
+    <div class="card">
+      <h2 style="margin:0 0 6px;">使い方（3ステップ）</h2>
+      <ol class="mini">
+        <li>対象となる文字列を貼り付けます</li>
+        <li>削除したい文字（キーワード）を入力します</li>
+        <li>削除ボタンを押して、結果をコピーします</li>
+      </ol>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="/#tool-remove-contains"
+           onclick="gtag('event','tool_open',{tool:'remove_contains',from:'tool_page_steps'});">
+          ▶ 部分一致削除ツールを開く
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pro導線 -->
+  <section>
+    <div class="card" style="background:linear-gradient(135deg,#ffffff,#f7fbff);">
+      <h2 style="margin:0 0 6px;">もっと効率化したい場合</h2>
+      <p class="mini" style="margin:0;">
+        複数条件での除外や、差分チェック、条件保存などを行いたい場合は Mojician Pro が便利です。
+      </p>
+
+      <ul class="mini" style="margin:10px 0 0 18px;">
+        <li>複数キーワードでの一括除外</li>
+        <li>テキスト差分比較</li>
+        <li>辞書置換・一括整形</li>
+      </ul>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="/pro.html"
+           onclick="gtag('event','pro_click',{from:'tool_page_pro_card'});">
+          🚀 Proの機能を見る
+        </a>
+        <a class="btn btn-ghost"
+           href="https://pro.mojician.jp/auth/signin">
+          🔑 Proユーザーはログイン
+        </a>
+      </div>
+
+      <p class="mini" style="margin-top:10px;">
+        ※ まずは無料で十分。必要になったらProでOK、という設計です。
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2 style="font-size:1.3rem;margin:0 0 8px;">よくある質問</h2>
+
+    <details>
+      <summary>入力した文字は保存されますか？</summary>
+      <div class="mini">
+        いいえ。Mojicianは入力データを保存しません。
+      </div>
+    </details>
+
+    <details>
+      <summary>大文字・小文字は区別されますか？</summary>
+      <div class="mini">
+        現在は区別せず、文字列を含むかどうかで判定します。
+      </div>
+    </details>
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="mailto:info@factorylance.jp">お問い合わせ</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
+</body>
+</html>
