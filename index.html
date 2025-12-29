@@ -76,6 +76,9 @@
       display:flex; align-items:center; gap:10px;
       font-weight:800; letter-spacing:0.2px;
     }
+    .logo:hover {
+      text-decoration: none;
+    }
     .logo-badge{
       width:34px; height:34px; border-radius:12px;
       background:linear-gradient(135deg,var(--accent),var(--accent2));
@@ -237,7 +240,7 @@
 <body>
 <header>
   <div class="wrap nav">
-    <div class="logo">
+    <a href="/" class="logo" style="text-decoration:none;color:inherit;">
       <div class="logo-badge">M</div>
       <div>Mojician</div>
     </div>
