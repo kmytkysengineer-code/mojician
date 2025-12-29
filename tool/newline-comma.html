@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>改行↔カンマ変換｜改行リストとカンマ区切りを相互変換する無料ツール - Mojician</title>
+  <meta name="description" content="Mojicianの改行↔カンマ変換ツールは、改行で並んだ文字列をカンマ区切りに、またはその逆に変換できる無料Webツールです。SQLのIN句作成、Excel貼り付け前の整形、設定値リスト作成に便利。登録不要・ブラウザ完結・非保存。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/tool/newline-comma.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="改行↔カンマ変換｜無料で使える文字列整形ツール - Mojician" />
+  <meta property="og:description" content="改行リストとカンマ区切りを相互に変換。貼り付けてボタンを押すだけ。非保存・ブラウザ完結。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mojician.jp/tool/newline-comma.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK8NJSP8SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NK8NJSP8SY');
+  </script>
+
+  <style>
+    :root{
+      --bg:#f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --border:#e6ecfa;
+      --radius:22px;
+      --shadow:0 8px 24px rgba(24,48,114,0.08);
+      --shadow-soft:0 6px 18px rgba(24,48,114,0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.8;
+    }
+    a{color:#3b63ff;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:980px;margin:0 auto;padding:0 16px;}
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 0;gap:10px;
+    }
+    .logo{display:flex;align-items:center;gap:10px;font-weight:900;}
+    .logo-badge{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid;place-items:center;color:#fff;font-weight:900;
+      box-shadow:var(--shadow-soft);
+    }
+    .nav-links{display:flex;gap:10px;flex-wrap:wrap;}
+    .nav-links a{
+      color:var(--muted);
+      padding:6px 8px;border-radius:10px;font-size:.95rem;
+    }
+    .nav-links a:hover{background:#eef3ff;color:var(--text);text-decoration:none;}
+
+    main{padding:18px 0 30px;}
+    section{padding:14px 0;}
+    h1{font-size:1.8rem;margin:0 0 6px;line-height:1.3;}
+    h2{font-size:1.25rem;margin:0 0 6px;}
+    .lead{color:var(--muted);margin:0;}
+    .mini{font-size:.92rem;color:var(--muted);}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+    .btn{
+      padding:12px 16px;border-radius:14px;font-weight:900;
+      font-size:1rem;border:1px solid #d6def2;
+      background:#eef3ff;color:var(--text);
+      cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+      box-shadow:var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px);background:#e3ebff;}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:#fff;border:none;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+    .example{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      font-family:ui-monospace,Consolas,monospace;
+      font-size:.95rem;
+      white-space:pre-wrap;
+      color:#273656;
+    }
+    footer{
+      margin-top:18px;padding:18px 0 28px;
+      border-top:1px solid var(--border);
+      color:var(--muted);font-size:.9rem;
+    }
+    .footer-links{display:flex;gap:12px;flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo">
+      <div class="logo-badge">M</div>
+      <div>Mojician</div>
+    </div>
+    <nav class="nav-links">
+      <a href="/">ホーム</a>
+      <a href="/#tools">ツール一覧</a>
+      <a href="/pro.html">有料版（Pro）</a>
+      <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="card">
+    <h1>改行 ↔ カンマ区切りを相互に変換</h1>
+    <p class="lead">
+      改行で並んだ文字列を <b>カンマ区切り</b> に、  
+      カンマ区切りの文字列を <b>改行リスト</b> に変換できます。  
+      Excel・SQL・システム貼り付け前の整形に便利です。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary"
+         href="/#tool-newline-comma"
+         onclick="gtag('event','tool_open',{tool:'newline_comma',from:'tool_page_hero'});">
+        ▶ 今すぐツールを使う
+      </a>
+    </div>
+
+    <p class="mini" style="margin-top:10px;">
+      ✅ 登録不要 / ✅ ブラウザ完結 / ✅ 入力データは保存しません
+    </p>
+  </section>
+
+  <!-- 使いどころ -->
+  <section>
+    <div class="grid2">
+      <div class="card">
+        <h2>どんなときに使う？</h2>
+        <ul class="mini" style="margin:10px 0 0 18px;">
+          <li>SQLの <b>IN句</b> 用にカンマ区切りを作りたい</li>
+          <li>Excelの列を <b>一覧形式</b> に戻したい</li>
+          <li>設定値やIDリストを <b>貼り付け用</b> に整えたい</li>
+          <li>改行とカンマを何度も手作業で直している</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>よくある悩み</h2>
+        <ul class="mini" style="margin:10px 0 0 18px;">
+          <li>改行とカンマが混ざっていて整理が面倒</li>
+          <li>余計な空白や空行が入ってエラーになる</li>
+          <li>Excel関数を毎回考えるのが手間</li>
+          <li>少量でも頻度が高く、地味に時間を取られる</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 例 -->
+  <section>
+    <div class="card">
+      <h2>変換例</h2>
+
+      <div class="grid2">
+        <div>
+          <p class="mini"><b>改行 → カンマ区切り</b></p>
+          <div class="example">入力：
+A
+B
+C
+
+出力：
+A, B, C</div>
+        </div>
+
+        <div>
+          <p class="mini"><b>カンマ区切り → 改行</b></p>
+          <div class="example">入力：
+A, B, C
+
+出力：
+A
+B
+C</div>
+        </div>
+      </div>
+
+      <p class="mini" style="margin-top:12px;">
+        ※ 前後の空白削除・空要素の無視にも対応しています。
+      </p>
+    </div>
+  </section>
+
+  <!-- 使い方 -->
+  <section>
+    <div class="card">
+      <h2>使い方（3ステップ）</h2>
+      <ol class="mini" style="margin-left:18px;">
+        <li>文字列を貼り付けます（改行でもカンマでもOK）</li>
+        <li>変換方向を選びます</li>
+        <li>変換ボタンを押して、結果をコピーします</li>
+      </ol>
+
+      <div class="cta-row">
+        <a class="btn btn-primary"
+           href="/#tool-newline-comma"
+           onclick="gtag('event','tool_open',{tool:'newline_comma',from:'tool_page_steps'});">
+          ▶ 改行↔カンマ変換ツールを開く
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pro（軽く触れるだけ） -->
+  <section>
+    <div class="card">
+      <h2>さらに効率化したい場合</h2>
+      <p class="mini">
+        繰り返し使う整形条件を保存したい場合や、
+        差分チェック・一括置換なども行いたい場合は Mojician Pro が便利です。
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/pro.html">🚀 Proの機能を見る</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="mailto:info@factorylance.jp">お問い合わせ</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
+</body>
+</html>
