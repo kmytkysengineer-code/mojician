@@ -221,6 +221,21 @@
       color: #fff;
       border: none;
     }
+
+    .tool-more {
+      margin-top: 8px;
+      text-align: right;
+    }
+    
+    .tool-more a {
+      font-size: 0.85rem;
+      color: #5b6a8a;
+      text-decoration: none;
+    }
+    
+    .tool-more a:hover {
+      text-decoration: underline;
+    }
     
     .subtitle li{margin-bottom:6px;}
 
@@ -372,7 +387,12 @@ cherry
           逆にカンマ区切りの文字列を改行リストに戻したりできます。
           Excelやシステムへの貼り付け前の整形作業に役立ちます。
         </p>
-
+        <div class="tool-more">
+          <a href="/tool/prefix-suffix.html"
+             onclick="gtag('event','tool_more',{tool:'prefix_suffix'});">
+            もっと見る →
+          </a>
+        </div>
         <p class="mini" style="margin-top:4px;">例）改行「A↵B↵C」→「A, B, C」</p>
         <a href="#tool-newline-comma" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
       </div>
