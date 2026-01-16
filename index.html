@@ -152,9 +152,24 @@
     .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
     @media (max-width:900px){.grid3{grid-template-columns:1fr;}}
     .card{
-      background:var(--card); border:1px solid var(--border);
-      border-radius:var(--radius); padding:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:18px;
       box-shadow: var(--shadow-soft);
+    
+      /* 追加 */
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+    .card:hover{
+      transform: translateY(-4px);
+      box-shadow:
+        0 14px 24px -6px rgba(59,130,246,0.25),
+        0 0 0 1px rgba(59,130,246,0.12);
+      border-color: var(--accent);
     }
     .card h3{margin:0 0 6px; font-size:1.1rem;}
     .tag{
@@ -378,7 +393,7 @@ cherry
           </a>
         </div>
         <p class="mini" style="margin-top:4px;">例）apple → 'apple'</p>
-        <a href="#tool-prefix-suffix" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+        <a href="#tool-prefix-suffix" class="btn btn-ghost" style="margin-top:6px;">使う🪄</a>
       </div>
 
       <div class="card">
@@ -396,7 +411,7 @@ cherry
           </a>
         </div>
         <p class="mini" style="margin-top:4px;">例）改行「A↵B↵C」→「A, B, C」</p>
-        <a href="#tool-newline-comma" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+        <a href="#tool-newline-comma" class="btn btn-ghost" style="margin-top:6px;">使う🪄</a>
       </div>
 
       <div class="card">
@@ -414,7 +429,7 @@ cherry
           </a>
         </div>
         <p class="mini" style="margin-top:4px;">例）apple, banana, apple → apple, banana</p>
-        <a href="#tool-deduplicate" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+        <a href="#tool-deduplicate" class="btn btn-ghost" style="margin-top:6px;">使う🪄</a>
       </div>
   
       <div class="card">
@@ -432,7 +447,7 @@ cherry
           </a>
         </div>
         <p class="mini" style="margin-top:4px;">例）左：A / B　右：X → A_X / B_X</p>
-        <a href="#tool-two-col-join" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+        <a href="#tool-two-col-join" class="btn btn-ghost" style="margin-top:6px;">使う🪄</a>
       </div>
 
       <div class="card">
@@ -450,7 +465,7 @@ cherry
           </a>
         </div>
         <p class="mini" style="margin-top:4px;">例）「NG」を含む行だけ抽出 / 削除</p>
-        <a href="#tool-remove-contains" class="btn btn-ghost" style="margin-top:6px;">このページ内で使えます</a>
+        <a href="#tool-remove-contains" class="btn btn-ghost" style="margin-top:6px;">使う🪄</a>
       </div>
 
       <div class="card">
