@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>機能要望を送る｜Mojician（モジシャン）</title>
+  <meta name="description" content="Mojicianの機能要望・改善リクエストを送れるページです。「こんな機能がほしい」「ここが使いにくい」など、気軽に投稿できます。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/request.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="機能要望を送る｜Mojician（モジシャン）" />
+  <meta property="og:description" content="Mojicianの改善要望を気軽に投稿できます。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mojician.jp/request.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- GA4（既存と同じID想定） -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK8NJSP8SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NK8NJSP8SY');
+  </script>
+
+  <style>
+    :root{
+      --bg: #f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --border:#e6ecfa;
+      --radius:22px;
+      --shadow: 0 8px 24px rgba(24, 48, 114, 0.08);
+      --shadow-soft: 0 6px 18px rgba(24, 48, 114, 0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.8;
+    }
+    a{color:#3b63ff; text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:980px; margin:0 auto; padding:0 16px;}
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:10px;
+    }
+    .logo{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      text-decoration:none;
+      color:inherit;
+      white-space:nowrap;
+    }
+    .logo:hover{ text-decoration:none; }
+    .logo-badge{
+      width:34px; height:34px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid; place-items:center; color:white; font-weight:900;
+      box-shadow: var(--shadow-soft);
+      flex: 0 0 auto;
+    }
+    .nav-links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;}
+    .nav-links a{
+      color:var(--muted);
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:0.95rem;
+      white-space:nowrap;
+    }
+    .nav-links a:hover{background:#eef3ff; color:var(--text); text-decoration:none;}
+
+    main{padding:18px 0 30px;}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    h1{margin:0 0 6px; font-size:1.8rem; line-height:1.3;}
+    .lead{color:var(--muted); margin:0;}
+    .mini{font-size:0.92rem; color:var(--muted);}
+
+    section{padding:14px 0;}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+    .btn{
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:1rem;
+      border:1px solid #d6def2;
+      background:#eef3ff;
+      color:var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px); background:#e3ebff;}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:white; border:none;
+    }
+    .btn-ghost{background:transparent; box-shadow:none;}
+
+    .note{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      color:#273656;
+    }
+
+    .form-embed{
+      width:100%;
+      height:980px;
+      border:0;
+      border-radius:16px;
+      overflow:hidden;
+      background:white;
+    }
+
+    footer{
+      margin-top:18px; padding:18px 0 28px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+    .footer-links{display:flex; gap:12px; flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Mojician Home">
+      <div class="logo-badge">M</div>
+      <div>Mojician🪄</div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/#tools" onclick="gtag('event','nav_click',{to:'tools_list',from:'request_nav'});">ツール一覧</a>
+      <a href="/#faq" onclick="gtag('event','nav_click',{to:'faq',from:'request_nav'});">FAQ</a>
+      <a href="/pro.html" onclick="gtag('event','pro_click',{from:'request_nav'});">有料版（Pro）</a>
+      <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>機能要望・改善リクエスト</h1>
+    <p class="lead">
+      「ここが使いにくい」「こんな機能がほしい」など、気軽に送ってください。<br>
+      すべての要望に対応できるわけではありませんが、今後の改善の参考にします。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/#tools"
+         onclick="gtag('event','nav_click',{to:'tools_list',from:'request_hero'});">
+        ◀ 無料ツールに戻る
+      </a>
+      <a class="btn btn-ghost" href="/contact.html"
+         onclick="gtag('event','nav_click',{to:'contact',from:'request_hero'});">
+        お問い合わせはこちら
+      </a>
+    </div>
+
+    <p class="mini" style="margin-top:10px;">
+      ✅ 匿名OK / ✅ 返信が必要な場合のみメールアドレス入力 / ✅ 個人情報・機密情報は入力しないでください
+    </p>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2 style="margin:0 0 6px; font-size:1.2rem;">投稿フォーム</h2>
+
+      <div class="note mini" style="margin:10px 0 14px;">
+        ※ Googleフォームを利用します。<br>
+        ※ 投稿内容は改善検討の目的でのみ利用し、公開や第三者提供は行いません。
+      </div>
+
+      <!-- ▼▼▼ ここに Googleフォームの埋め込みURLを入れてください ▼▼▼
+           Googleフォーム → 送信 → <>（埋め込む）→ iframeの src をコピー
+      -->
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe8eOB2Kn6R0BmagPLOdPkx1VhIl3Hzi7Ad9V5dt7UYwHDrXA/viewform?embedded=true" width="640" height="1574" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+
+      <div class="mini" style="margin-top:12px;">
+        うまく表示されない場合は、別タブで開いてください：
+        <a href="PASTE_YOUR_GOOGLE_FORM_URL_HERE"
+           target="_blank" rel="noopener"
+           onclick="gtag('event','request_form_open_newtab',{from:'request_page'});">
+          フォームを開く →
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="/contact.html">お問い合わせ</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
+</body>
+</html>
