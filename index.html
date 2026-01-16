@@ -100,7 +100,11 @@
       display:grid; grid-template-columns:1.1fr 0.9fr; gap:16px; align-items:center;
     }
     @media (max-width:900px){ .hero{grid-template-columns:1fr; padding-top:28px;} }
-
+    .hero h1 span {
+      color: var(--accent);
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+      position: relative;
+    }
     .hero-card{
       background:var(--card);
       border:1px solid var(--border);
@@ -294,7 +298,7 @@
   <!-- HERO -->
   <section class="hero">
     <div>
-      <h1>テキストを貼るだけ<br>Mojicianが文字の加工をお手伝いします</h1>
+      <h1>そのひと手間に、<br><span>魔法をひと振り</span></h1>
       <p class="subtitle">
         Mojician（モジシャン）は、パソコンが少し苦手な方でも使いやすい<br>
         <b>文字加工ツール</b>です。<br>
@@ -302,8 +306,8 @@
       </p>
 
       <div class="cta-row">
-        <a class="btn btn-primary" href="#tools">🌟 かんたん無料で使う</a>
-        <a class="btn btn-ghost" href="#pro">効率的に使いたい</a>
+        <a class="btn btn-primary" href="#tools">🌟 今すぐ無料で使う</a>
+        <a class="btn btn-ghost" href="#pro">Pro版を検討する</a>
       </div>
 
       <p class="mini">
