@@ -356,25 +356,87 @@ cherry
       日常業務の「ちょっと面倒」を減らすことを目的に作りました。
     </p>
   </section>
-
+  <br>
   
   <!-- FEATURES -->
-  <section>
-    <div class="grid3">
-      <div class="card">
-        <h3>複雑な知識はいりません</h3>
-        <p class="subtitle">Excelの関数や特別な手順を覚えなくても大丈夫。必要な加工だけ、ボタンでできます。</p>
-      </div>
-      <div class="card">
-        <h3>毎日の事務作業をちょっと楽に</h3>
-        <p class="subtitle">コピペ前提の文字整形をまとめて処理。手作業のミスや時間を減らせます。</p>
-      </div>
-      <div class="card">
-        <h3>安心して使えます</h3>
-        <p class="subtitle">社外に出せない文字列の整形に。入力内容を保存せず、AIにも送信しません。業務データ・名簿・ID一覧なども、安心して使えます。</p>
+<section class="workspace" style="border: 2px solid #e2e8f0; background: #fff;">
+  <div style="padding: 10px 20px;">
+    <h2 style="font-size: 1.8rem; margin-top: 0; color: var(--text-main);">専門知識や複雑な関数は不要です</h2>
+    <p style="color: var(--text-main); line-height: 1.8; margin-top: 16px;">
+      テキストの整形や加工を行う際、Excelの複雑な関数（SUBSTITUTEやCONCATENATEなど）を組み合わせたり、専用のプログラムを組んだりする必要はありません。
+      <br>
+      Mojicianは、非エンジニアの方や事務職の方でも、直感的な操作だけで文字列操作を完結できるよう設計されています。
+      <br><br>
+      「やりたい加工」に合わせた専用の入力欄にテキストを貼り付け、実行ボタンをクリックするだけ。操作方法を調べる時間を最小限に抑え、本来の業務に集中できる環境を提供します。
+    </p>
+  </div>
+</section>
+<br>
+<section class="workspace" style="border: 2px solid #e2e8f0; background: #fff;">
+  <div style="padding: 10px 20px;">
+    <h2 style="font-size: 1.8rem; margin-top: 0; color: var(--text-main);">定型的な事務作業を自動化し、ヒューマンエラーを防止</h2>
+    <p style="color: var(--text-main); line-height: 1.8; margin-top: 16px;">
+      名簿の整理、システム登録用データの作成、大量のID一覧への記号追加など、手作業で行う文字加工には常に「コピーミス」や「変換漏れ」のリスクが伴います。
+      <br><br>
+      Mojicianを利用することで、数百行、数千行に及ぶデータであっても一括で、かつ正確に処理することが可能です。
+      <br>
+      単純なコピペ作業に費やしていた時間を大幅に短縮し、作業精度の向上と業務効率の最大化を同時に実現します。
+    </p>
+  </div>
+</section>
+<br>
+<section id="security-policy" class="workspace" style="border: 2px solid #e2e8f0; background: #fff;">
+  <div style="padding: 10px 20px;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+      <span style="background: #10b981; color: white; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">セキュリティ</span>
+      <h2 style="font-size: 1.8rem; margin: 0; color: var(--text-main);">機密情報の取り扱いについて</h2>
+    </div>
+    <p style="color: var(--text-main); line-height: 1.8;">
+      ビジネスシーンでの利用を想定し、Mojicianではユーザーのプライバシーとデータセキュリティを最優先事項としています。本サービスが安全に利用できる技術的根拠は以下の通りです。
+    </p>
+    <ul style="color: var(--text-main); line-height: 2; margin-top: 16px;">
+      <li><strong>クライアントサイド処理の徹底：</strong> 入力されたテキストデータは、すべてお客様のブラウザ内（JavaScript）で処理されます。データが当サイトのサーバーへ送信される仕組みはありません。</li>
+      <li><strong>データの保存・学習の排除：</strong> サーバーを介さないため、入力内容がログとして残ることや、AIの学習用データとして再利用されることはありません。</li>
+      <li><strong>外部漏洩リスクの遮断：</strong> 通信が発生しないため、機密性の高い社内データや個人情報、IDリストなども安心して加工いただけます。</li>
+    </ul>
+  </div>
+</section>
+
+<section class="workspace" style="background: #f8fafc; border-top: 1px solid var(--border);">
+  <div style="padding: 10px 20px;">    
+    <div style="background: white; padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border);">
+      <h3 style="font-size: 1.1rem; color: var(--text-main); margin-top: 0; display: flex; align-items: flex-start; gap: 10px;">
+        <span style="color: var(--accent); font-weight: 900;">Q.</span>
+        なぜテキスト加工にAIを使わないのか？
+      </h3>
+      
+      <div style="margin-left: 28px; color: var(--text-muted); line-height: 1.8;">
+        <p style="margin-bottom: 16px;">
+          <span style="color: #e11d48; font-weight: bold;">A.</span>
+          お客様のデータを「外部へ送信しないこと」と「加工の確実性を担保すること」を最優先しているためです。
+        </p>
+        <p>
+          現在、多くのAIサービスは入力されたデータをクラウドサーバーで処理する仕組みを採用しており、
+          サービスによっては入力内容が学習や品質向上の目的で利用される場合があります。
+          機密性の高いビジネスデータを扱う際、これは情報の漏洩リスクとなり得ます。
+        </p>
+        <p>
+          また、AIツールのように「どう指示を書けばよいか（プロンプト）」を考える必要もありません。
+          Mojicianでは、やりたい加工内容に合わせて項目を選ぶだけで、
+          誰でも同じ結果を安定して得られるよう設計しています。
+        </p>
+        <p>
+          Mojicianは、あえてAIを使わず、ブラウザ上で動作する事前に定義された処理ルール（プログラム）のみで加工を行います。これにより、以下の3点をお約束しています。
+        </p>
+        <ul style="margin-top: 12px; padding-left: 20px;">
+          <li><strong>外部送信なし：</strong> 外部サーバーやAI学習モデルへデータが送られる仕組みはありません。</li>
+          <li><strong>加工の正確性：</strong> AI特有の「推測による意図しない書き換え」が発生せず、常に一貫した結果を返します。</li>
+          <li><strong>超高速処理：</strong> クラウドとの通信待機時間が発生しないため、貼り付けた瞬間に加工が完了します。</li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- TOOLS -->
   <section id="tools">
