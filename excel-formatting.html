@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Excelを使った文字列整形｜よくある6パターンを例つきで解説 - Mojician</title>
+  <meta name="description" content="Excelを使った文字列整形の方法を、前後追加・改行↔カンマ変換・重複削除・2列結合・含む行の削除/抽出・ソートの6パターンで解説。Excel 365と旧Excelの違いも整理。Mojicianなら貼り付けてボタン1回で終わります。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/excel-formatting.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="Excelを使った文字列整形｜よくある6パターン - Mojician" />
+  <meta property="og:description" content="Excel 365/旧Excelの違いも含めて、実務でよくある文字整形を例つきで解説。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mojician.jp/excel-formatting.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK8NJSP8SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NK8NJSP8SY');
+  </script>
+
+  <style>
+    :root{
+      --bg:#f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --border:#e6ecfa;
+      --radius:22px;
+      --shadow:0 8px 24px rgba(24,48,114,0.08);
+      --shadow-soft:0 6px 18px rgba(24,48,114,0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.85;
+    }
+    a{color:#3b63ff;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:980px;margin:0 auto;padding:0 16px;}
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 0;gap:10px;
+    }
+    .logo{
+      display:inline-flex;align-items:center;gap:10px;
+      font-weight:900;text-decoration:none;color:inherit;white-space:nowrap;
+    }
+    .logo:hover{text-decoration:none;}
+    .logo-badge{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid;place-items:center;color:#fff;font-weight:900;
+      box-shadow:var(--shadow-soft);
+      flex:0 0 auto;
+    }
+    .nav-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
+    .nav-links a{
+      color:var(--muted);
+      padding:6px 8px;border-radius:10px;font-size:.95rem;white-space:nowrap;
+    }
+    .nav-links a:hover{background:#eef3ff;color:var(--text);text-decoration:none;}
+
+    main{padding:18px 0 30px;}
+    section{padding:14px 0;}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    h1{margin:0 0 8px;font-size:1.8rem;line-height:1.3;}
+    h2{margin:0 0 8px;font-size:1.25rem;}
+    h3{margin:0 0 6px;font-size:1.05rem;}
+    .lead{color:var(--muted);margin:0;}
+    .mini{font-size:.92rem;color:var(--muted);}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+    }
+    .toc a{display:block;padding:6px 0;color:var(--muted);}
+    .toc a:hover{color:var(--text);text-decoration:none;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+    .example{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      font-family:ui-monospace,Consolas,monospace;
+      font-size:.95rem;
+      white-space:pre-wrap;
+      color:#273656;
+    }
+    .note{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      color:#273656;
+    }
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+    .btn{
+      padding:12px 16px;border-radius:14px;
+      font-weight:900;font-size:1rem;
+      border:1px solid #d6def2;
+      background:#eef3ff;color:var(--text);
+      cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+      box-shadow:var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px);background:#e3ebff;}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:#fff;border:none;
+    }
+    .btn-ghost{background:transparent;box-shadow:none;}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:.82rem;color:#3a4a6b;padding:5px 10px;
+      background:#f2f6ff;border-radius:999px;font-weight:900;
+      border:1px solid var(--border);
+    }
+    footer{
+      margin-top:18px;padding:18px 0 28px;
+      border-top:1px solid var(--border);
+      color:var(--muted);font-size:.9rem;
+    }
+    .footer-links{display:flex;gap:12px;flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Mojician Home">
+      <div class="logo-badge">M</div>
+      <div>Mojician🪄</div>
+    </a>
+    <nav class="nav-links">
+      <a href="/#tools" onclick="gtag('event','nav_click',{to:'tools_list',from:'excel_nav'});">ツール一覧</a>
+      <a href="/guide.html">使い方ガイド</a>
+      <a href="/pro.html" onclick="gtag('event','pro_click',{from:'excel_nav'});">有料版（Pro）</a>
+      <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="tag">記事</span>
+    <h1>Excelを使った文字列整形<br>よくある6パターンを例つきで解説</h1>
+    <p class="lead">
+      Excelでも文字列整形はできます。ただし、<b>関数の組み合わせ・バージョン差・コピペミス</b>が起きやすいのも事実です。<br>
+      この記事では、実務でよくあるパターンを「Excelでのやり方」と「つまずきポイント」までまとめます。
+      Mojicianなら、同じ作業を貼り付けてボタン1回で終わらせられます。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/#tools"
+         onclick="gtag('event','nav_click',{to:'tools_list',from:'excel_hero'});">
+        ▶ Mojicianでサクッとやる
+      </a>
+      <a class="btn btn-ghost" href="/request.html"
+         onclick="gtag('event','nav_click',{to:'request',from:'excel_hero'});">
+        💬 要望を送る
+      </a>
+    </div>
+
+    <p class="mini" style="margin-top:10px;">
+      補足：Excel関数は <b>Excel 365</b> で便利なもの（TEXTSPLIT / UNIQUE / SORT）が増えています。旧Excelの場合は手順が増えることがあります。
+    </p>
+  </section>
+
+  <!-- TOC -->
+  <section>
+    <div class="card toc">
+      <h2>目次</h2>
+      <a href="#p1">1. 各行を引用符や記号で囲む（前後追加）</a>
+      <a href="#p2">2. 改行↔カンマに変換する（改行↔カンマ）</a>
+      <a href="#p3">3. 重複を削除してユニーク化する（重複削除）</a>
+      <a href="#p4">4. 2列を行ごとに結合する（2列結合）</a>
+      <a href="#p5">5. 特定文字を含む行を削除／抽出する（フィルタ／関数）</a>
+      <a href="#p6">6. 行を並び替える（ソート）</a>
+      <a href="#summary">まとめ：ExcelとMojicianの使い分け</a>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section id="p1">
+    <div class="card">
+      <h2>1. 各行を引用符や記号で囲む（前後追加）</h2>
+      <p class="mini">
+        例：SQLのIN句用に <b>'A'</b> の形にしたい／括弧で囲みたい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>Excelでのやり方（基本）</h3>
+          <div class="example">A列に値があるとして…
+
+= "'" & A1 & "'"
+
+例）apple → 'apple'</div>
+
+          <div class="note mini" style="margin-top:12px;">
+            ポイント：作った列をコピー →「値として貼り付け」で固定すると安心です。
+          </div>
+        </div>
+
+        <div>
+          <h3>つまずきポイント</h3>
+          <ul class="mini" style="margin:8px 0 0 18px;">
+            <li>オートフィルの範囲ミス</li>
+            <li>値貼り付けを忘れて関数が残る</li>
+            <li>空行が混ざって意図しない文字列ができる</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-prefix-suffix"
+               onclick="gtag('event','tool_open',{tool:'prefix_suffix',from:'excel_p1'});">
+              ▶ Mojician（前後追加）でやる
+            </a>
+            <a class="btn btn-ghost" href="/tool/prefix-suffix.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="p2">
+    <div class="card">
+      <h2>2. 改行↔カンマに変換する（改行↔カンマ）</h2>
+      <p class="mini">
+        例：改行の一覧を <b>A, B, C</b> にしたい／カンマ区切りを改行に戻したい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>Excel 365なら（簡単）</h3>
+          <div class="example">■ 改行（列）→ カンマ
+=TEXTJOIN(", ", TRUE, A:A)
+
+■ カンマ → 改行（列に分割）
+=TEXTSPLIT(A1, ",")</div>
+
+          <p class="mini" style="margin-top:10px;">
+            ※TEXTSPLITは区切り文字が「, 」の場合、トリムが必要なことがあります。
+          </p>
+        </div>
+
+        <div>
+          <h3>旧Excelだと（手順が増える）</h3>
+          <ul class="mini" style="margin:8px 0 0 18px;">
+            <li>改行→カンマ：補助列で連結（&）を作って結合、またはPower Query</li>
+            <li>カンマ→改行：「区切り位置」やPower Queryで列分割 → 行に戻す</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-newline-comma"
+               onclick="gtag('event','tool_open',{tool:'newline_comma',from:'excel_p2'});">
+              ▶ Mojician（改行↔カンマ）でやる
+            </a>
+            <a class="btn btn-ghost" href="/tool/newline-comma.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="note mini" style="margin-top:12px;">
+        現場あるある：空白や空行が混ざると、貼り付け先でエラーになることがあります。Mojicianは空白削除・空要素無視もまとめてできます。
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="p3">
+    <div class="card">
+      <h2>3. 重複を削除してユニーク化する（重複削除）</h2>
+      <p class="mini">
+        例：名簿やID一覧で重複が混ざったので、重複だけ消したい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>Excelでのやり方（UI）</h3>
+          <div class="example">［データ］→［重複の削除］
+
+・対象列を選択
+・重複とみなす列を選ぶ
+・OK</div>
+
+          <h3 style="margin-top:14px;">Excel 365なら（関数）</h3>
+          <div class="example">=UNIQUE(A:A)</div>
+        </div>
+
+        <div>
+          <h3>つまずきポイント</h3>
+          <ul class="mini" style="margin:8px 0 0 18px;">
+            <li>対象列を間違える（別列まで巻き込む）</li>
+            <li>前後の空白があると「別物扱い」になる</li>
+            <li>貼り付け元が改行＋カンマ混在で崩れる</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-deduplicate"
+               onclick="gtag('event','tool_open',{tool:'deduplicate',from:'excel_p3'});">
+              ▶ Mojician（重複削除）でやる
+            </a>
+            <a class="btn btn-ghost" href="/tool/deduplicate.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="p4">
+    <div class="card">
+      <h2>4. 2列を行ごとに結合する（2列結合）</h2>
+      <p class="mini">
+        例：拠点名＋部署名、ID＋名称など、2列を同じ行どうしで結合したい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>Excelでのやり方</h3>
+          <div class="example">A列とB列を結合（区切りに "_" を入れる）
+
+=A1 & "_" & B1
+
+片側が固定値（B1を全行に使う）
+=A1 & "_" & $B$1</div>
+
+          <div class="note mini" style="margin-top:12px;">
+            固定値のときは <b>$</b> を付けて参照を固定すると崩れません。
+          </div>
+        </div>
+
+        <div>
+          <h3>つまずきポイント</h3>
+          <ul class="mini" style="margin:8px 0 0 18px;">
+            <li>行ズレ（片側だけ行数が違う）</li>
+            <li>空行が混ざって意図しない結合になる</li>
+            <li>区切り文字の入れ忘れで読みにくい</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-two-col-join"
+               onclick="gtag('event','tool_open',{tool:'two_col_join',from:'excel_p4'});">
+              ▶ Mojician（2列結合）でやる
+            </a>
+            <a class="btn btn-ghost" href="/tool/two-col-join.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="p5">
+    <div class="card">
+      <h2>5. 特定文字を含む行を削除／抽出する（フィルタ／関数）</h2>
+      <p class="mini">
+        例：ログからDEBUG行だけ消したい／NG行だけ抽出したい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>Excelでのやり方（フィルタ）</h3>
+          <div class="example">［データ］→［フィルター］
+
+対象列の▼から
+・テキストフィルター
+・「次の値を含む」</div>
+
+          <p class="mini" style="margin-top:10px;">
+            抽出後は、表示されている行だけコピーして別シートへ貼り付けるのが定番です。
+          </p>
+
+          <h3 style="margin-top:14px;">Excel 365なら（関数）</h3>
+          <div class="example">例：A列から「NG」を含む行だけ抽出
+=FILTER(A:A, ISNUMBER(SEARCH("NG", A:A)))</div>
+        </div>
+
+        <div>
+          <h3>つまずきポイント</h3>
+          <ul class="mini" style="margin:8px 0 0 18px;">
+            <li>複数キーワード条件が面倒（OR条件）</li>
+            <li>削除と抽出を間違える（意図が逆になる）</li>
+            <li>大文字/小文字の扱い、前後空白でヒットしない</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-remove-contains"
+               onclick="gtag('event','tool_open',{tool:'remove_contains',from:'excel_p5'});">
+              ▶ Mojician（含む文字）でやる
+            </a>
+            <a class="btn btn-ghost" href="/tool/remove-contains.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="note mini" style="margin-top:12px;">
+        仕事で多いのは「削除/抽出を両方やる」ケースです。Mojicianはワンクリで切り替えできます。
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="p6">
+    <div class="card">
+      <h2>6. 行を並び替える（ソート）</h2>
+      <p class="mini">
+        例：ID一覧を昇順にしたい／数値として正しく並び替えたい（10が2より後になるように）。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>Excelでのやり方（UI）</h3>
+          <div class="example">［データ］→［並べ替え］
+・昇順/降順を選ぶ
+・数値/文字の列を選ぶ</div>
+
+          <h3 style="margin-top:14px;">Excel 365なら（関数）</h3>
+          <div class="example">昇順：=SORT(A:A)
+降順：=SORT(A:A, 1, -1)</div>
+        </div>
+
+        <div>
+          <h3>つまずきポイント</h3>
+          <ul class="mini" style="margin:8px 0 0 18px;">
+            <li>数値なのに文字列扱いで並ぶ（"10"が"2"より前）</li>
+            <li>空行が混ざって先頭/末尾に来る</li>
+            <li>大小文字で順番が揺れる</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-sort-lines"
+               onclick="gtag('event','tool_open',{tool:'sort_lines',from:'excel_p6'});">
+              ▶ Mojician（ソート）でやる
+            </a>
+            <a class="btn btn-ghost" href="/tool/sort-lines.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Summary -->
+  <section id="summary">
+    <div class="card">
+      <h2>まとめ：ExcelとMojicianの使い分け</h2>
+
+      <div class="grid2">
+        <div class="note">
+          <h3 style="margin-top:0;">Excelが向いている場面</h3>
+          <ul style="margin:8px 0 0 18px;">
+            <li>表形式で整形したい（複数列がある）</li>
+            <li>加工後も表として管理したい</li>
+            <li>社内でExcel作業が標準化されている</li>
+          </ul>
+        </div>
+
+        <div class="note">
+          <h3 style="margin-top:0;">Mojicianが向いている場面</h3>
+          <ul style="margin:8px 0 0 18px;">
+            <li>コピペ前のテキスト整形をすぐ終わらせたい</li>
+            <li>Excelを開くほどではない（少量・頻繁）</li>
+            <li>AIに貼れないデータでも、非保存で加工したい</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn btn-primary" href="/#tools"
+           onclick="gtag('event','nav_click',{to:'tools_list',from:'excel_summary'});">
+          ▶ 無料ツールを使う
+        </a>
+        <a class="btn btn-ghost" href="/request.html"
+           onclick="gtag('event','nav_click',{to:'request',from:'excel_summary'});">
+          💬 要望を送る
+        </a>
+      </div>
+
+      <p class="mini" style="margin-top:10px;">
+        ※ この記事は一般的な方法のまとめです。Excelのバージョン・設定により挙動が異なることがあります。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="/contact.html">お問い合わせ</a>
+      <a href="/request.html">機能要望</a>
+      <a href="/guide.html">使い方ガイド</a>
+      <a href="/excel-formatting.html">Excelを使った文字列整形</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
+</body>
+</html>
