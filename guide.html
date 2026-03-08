@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>実務でよく使う文字列整形パターン集｜SQL・CSV・名簿・ログ対応 - Mojician</title>
+  <meta name="description" content="実務でよくある文字列整形（前後追加、改行↔カンマ、重複削除、2列結合、含む行の削除・抽出、並び替え）を具体例つきで解説。AIに入れられないデータでも、ブラウザ完結・非保存で安心して使えます。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mojician.jp/guide.html" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="実務でよく使う文字列整形パターン集｜Mojician" />
+  <meta property="og:description" content="SQL・CSV・名簿・ログの整形を例つきで解説。貼り付けてボタンを押すだけ。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mojician.jp/guide.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK8NJSP8SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NK8NJSP8SY');
+  </script>
+
+  <style>
+    :root{
+      --bg:#f4f8ff;
+      --bg-grad-1:#eaf2ff;
+      --bg-grad-2:#f6fffb;
+      --card:#ffffff;
+      --card-soft:#f8fbff;
+      --text:#1b2540;
+      --muted:#5b6a8a;
+      --accent:#6f92ff;
+      --accent2:#7ddac6;
+      --border:#e6ecfa;
+      --radius:22px;
+      --radius-sm:14px;
+      --shadow:0 8px 24px rgba(24,48,114,0.08);
+      --shadow-soft:0 6px 18px rgba(24,48,114,0.06);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at -10% -20%, var(--bg-grad-1), transparent 70%),
+        radial-gradient(1000px 800px at 110% -10%, var(--bg-grad-2), transparent 65%),
+        var(--bg);
+      line-height:1.85;
+    }
+    a{color:#3b63ff;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .wrap{max-width:980px;margin:0 auto;padding:0 16px;}
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(244,248,255,0.85);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 0;gap:10px;
+    }
+    .logo{
+      display:inline-flex;align-items:center;gap:10px;
+      font-weight:900;text-decoration:none;color:inherit;
+      white-space:nowrap;
+    }
+    .logo:hover{text-decoration:none;}
+    .logo-badge{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid;place-items:center;color:#fff;font-weight:900;
+      box-shadow:var(--shadow-soft);
+      flex:0 0 auto;
+    }
+    .nav-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
+    .nav-links a{
+      color:var(--muted);
+      padding:6px 8px;border-radius:10px;font-size:.95rem;
+      white-space:nowrap;
+    }
+    .nav-links a:hover{background:#eef3ff;color:var(--text);text-decoration:none;}
+
+    main{padding:18px 0 30px;}
+    section{padding:14px 0;}
+    .hero{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    h1{margin:0 0 8px;font-size:1.8rem;line-height:1.3;}
+    h2{margin:0 0 8px;font-size:1.25rem;}
+    h3{margin:0 0 6px;font-size:1.05rem;}
+    .lead{color:var(--muted);margin:0;}
+    .mini{font-size:.92rem;color:var(--muted);}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+    .example{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      font-family:ui-monospace,Consolas,monospace;
+      font-size:.95rem;
+      white-space:pre-wrap;
+      color:#273656;
+    }
+    .toc a{display:block;padding:6px 0;color:var(--muted);}
+    .toc a:hover{color:var(--text);text-decoration:none;}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:.82rem;color:#3a4a6b;padding:5px 10px;
+      background:#f2f6ff;border-radius:999px;font-weight:900;
+      border:1px solid var(--border);
+    }
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+    .btn{
+      padding:12px 16px;border-radius:14px;
+      font-weight:900;font-size:1rem;
+      border:1px solid #d6def2;
+      background:#eef3ff;color:var(--text);
+      cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+      box-shadow:var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px);background:#e3ebff;}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#5a78ff);
+      color:#fff;border:none;
+    }
+    .btn-ghost{background:transparent;box-shadow:none;}
+    .note{
+      background:var(--card-soft);
+      border:1px dashed #d9e2fb;
+      border-radius:16px;
+      padding:12px;
+      color:#273656;
+    }
+    footer{
+      margin-top:18px;padding:18px 0 28px;
+      border-top:1px solid var(--border);
+      color:var(--muted);font-size:.9rem;
+    }
+    .footer-links{display:flex;gap:12px;flex-wrap:wrap;}
+    .footer-links a{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Mojician Home">
+      <div class="logo-badge">M</div>
+      <div>Mojician🪄</div>
+    </a>
+    <nav class="nav-links">
+      <a href="/#tools" onclick="gtag('event','nav_click',{to:'tools_list',from:'guide_nav'});">ツール一覧</a>
+      <a href="/#faq" onclick="gtag('event','nav_click',{to:'faq',from:'guide_nav'});">FAQ</a>
+      <a href="/pro.html" onclick="gtag('event','pro_click',{from:'guide_nav'});">有料版（Pro）</a>
+      <a href="https://pro.mojician.jp/auth/signin">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="tag">ガイド</span>
+    <h1>実務でよく使う文字列整形パターン集<br>SQL・CSV・名簿・ログ対応</h1>
+    <p class="lead">
+      仕事でよく出る「コピペ前の整形」を、例つきでまとめました。<br>
+      Mojicianなら、貼り付けてボタンを押すだけで処理できます（入力データは保存しません）。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/#tools"
+         onclick="gtag('event','nav_click',{to:'tools_list',from:'guide_hero'});">
+        ▶ 無料ツールを開く
+      </a>
+      <a class="btn btn-ghost" href="/request.html"
+         onclick="gtag('event','nav_click',{to:'request',from:'guide_hero'});">
+        💬 要望を送る
+      </a>
+    </div>
+
+    <p class="mini" style="margin-top:10px;">
+      ✅ 登録不要 / ✅ ブラウザ完結 / ✅ 入力データは保存しません（外部送信を前提にしない設計）
+    </p>
+  </section>
+
+  <!-- TOC -->
+  <section>
+    <div class="card toc">
+      <h2>目次</h2>
+      <a href="#pattern1">1. SQLのIN句用に、値を引用符で囲みたい（前後追加）</a>
+      <a href="#pattern2">2. 改行リストをカンマ区切りにしたい／戻したい（改行↔カンマ）</a>
+      <a href="#pattern3">3. 重複行を消して、ユニークな一覧にしたい（重複削除）</a>
+      <a href="#pattern4">4. 2列（IDと名称など）を行ごとに結合したい（2列結合）</a>
+      <a href="#pattern5">5. NG行だけ削除／必要行だけ抽出したい（含む文字）</a>
+      <a href="#pattern6">6. 行を昇順・降順に並び替えたい（ソート）</a>
+      <a href="#tips">補足：AIに貼れないデータを整形するときの考え方</a>
+    </div>
+  </section>
+
+  <!-- Pattern 1 -->
+  <section id="pattern1">
+    <div class="card">
+      <h2>1. SQLのIN句用に、値を引用符で囲みたい（前後追加）</h2>
+      <p class="mini">
+        よくある作業：Excelの列をコピーして、SQLの <b>IN ('A','B','C')</b> の形にしたい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>例（入力→出力）</h3>
+          <div class="example">入力：
+apple
+banana
+cherry
+
+前：'
+後：'
+
+出力：
+'apple'
+'banana'
+'cherry'</div>
+        </div>
+        <div>
+          <h3>手順（Mojician）</h3>
+          <ol class="mini" style="margin:8px 0 0 18px;">
+            <li>値を貼り付ける</li>
+            <li>前に <b>'</b>、後に <b>'</b> を入力</li>
+            <li>変換してコピー</li>
+          </ol>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-prefix-suffix"
+               onclick="gtag('event','tool_open',{tool:'prefix_suffix',from:'guide_pattern1'});">
+              ▶ 前後追加を使う
+            </a>
+            <a class="btn btn-ghost" href="/tool/prefix-suffix.html">もっと詳しく</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="note mini" style="margin-top:12px;">
+        補足：カンマ区切りが必要なら、前後追加の後に「改行→カンマ変換」を使うとそのまま貼れます。
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 2 -->
+  <section id="pattern2">
+    <div class="card">
+      <h2>2. 改行リストをカンマ区切りにしたい／戻したい（改行↔カンマ）</h2>
+      <p class="mini">
+        よくある作業：改行で並んだ一覧を、CSV・SQL・設定ファイル用に <b>A, B, C</b> にしたい（または逆）。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>例（改行→カンマ）</h3>
+          <div class="example">入力：
+A
+B
+C
+
+出力：
+A, B, C</div>
+
+          <h3 style="margin-top:14px;">例（カンマ→改行）</h3>
+          <div class="example">入力：
+A, B, C
+
+出力：
+A
+B
+C</div>
+        </div>
+
+        <div>
+          <h3>手順（Mojician）</h3>
+          <ol class="mini" style="margin:8px 0 0 18px;">
+            <li>文字列を貼り付ける（改行でもカンマでもOK）</li>
+            <li>変換方向を選ぶ</li>
+            <li>変換してコピー</li>
+          </ol>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-newline-comma"
+               onclick="gtag('event','tool_open',{tool:'newline_comma',from:'guide_pattern2'});">
+              ▶ 改行↔カンマを使う
+            </a>
+            <a class="btn btn-ghost" href="/tool/newline-comma.html">もっと詳しく</a>
+          </div>
+          <p class="mini" style="margin-top:10px;">
+            ありがちなミス：空行・空白が混ざると、貼り付け先でエラーになることがあります。Mojicianなら空白削除などもまとめてできます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 3 -->
+  <section id="pattern3">
+    <div class="card">
+      <h2>3. 重複行を消して、ユニークな一覧にしたい（重複削除）</h2>
+      <p class="mini">
+        よくある作業：名簿やID一覧をまとめたら同じ値が混ざっていた。重複だけ消して、一覧をきれいにしたい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>例（入力→出力）</h3>
+          <div class="example">入力：
+A
+B
+A
+C
+B
+
+出力：
+A
+B
+C</div>
+        </div>
+        <div>
+          <h3>手順（Mojician）</h3>
+          <ol class="mini" style="margin:8px 0 0 18px;">
+            <li>一覧を貼り付ける</li>
+            <li>重複削除を実行</li>
+            <li>結果をコピー</li>
+          </ol>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-deduplicate"
+               onclick="gtag('event','tool_open',{tool:'deduplicate',from:'guide_pattern3'});">
+              ▶ 重複削除を使う
+            </a>
+            <a class="btn btn-ghost" href="/tool/deduplicate.html">もっと詳しく</a>
+          </div>
+          <p class="mini" style="margin-top:10px;">
+            ポイント：最初に出現した順序を保ったまま、重複だけ削除するので、業務の一覧整理でも扱いやすいです。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 4 -->
+  <section id="pattern4">
+    <div class="card">
+      <h2>4. 2列（IDと名称など）を行ごとに結合したい（2列結合）</h2>
+      <p class="mini">
+        よくある作業：IDと名称、拠点名と部署名など、2つの列を <b>同じ行どうし</b> で結合して1行にしたい。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>例（入力→出力）</h3>
+          <div class="example">左列：
+A
+B
+C
+
+右列：
+1
+2
+3
+
+区切り： =
+
+出力：
+A=1
+B=2
+C=3</div>
+        </div>
+        <div>
+          <h3>手順（Mojician）</h3>
+          <ol class="mini" style="margin:8px 0 0 18px;">
+            <li>左と右に貼り付ける</li>
+            <li>間に入れる文字（区切り）を入れる</li>
+            <li>結合してコピー</li>
+          </ol>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-two-col-join"
+               onclick="gtag('event','tool_open',{tool:'two_col_join',from:'guide_pattern4'});">
+              ▶ 2列結合を使う
+            </a>
+            <a class="btn btn-ghost" href="/tool/two-col-join.html">もっと詳しく</a>
+          </div>
+          <p class="mini" style="margin-top:10px;">
+            片側が1行だけの場合は、全行に同じ値を付ける使い方（例：全支店に「_X」を付ける）もよくあります。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 5 -->
+  <section id="pattern5">
+    <div class="card">
+      <h2>5. NG行だけ削除／必要行だけ抽出したい（含む文字）</h2>
+      <p class="mini">
+        よくある作業：ログや一覧から、特定キーワードを含む行だけ除外したい（または抽出したい）。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>例（削除）</h3>
+          <div class="example">入力：
+INFO: start
+DEBUG: value=1
+INFO: end
+DEBUG: value=2
+
+対象：DEBUG
+
+出力：
+INFO: start
+INFO: end</div>
+
+          <h3 style="margin-top:14px;">例（抽出）</h3>
+          <div class="example">入力：
+OK
+NGあり
+OK
+
+対象：NG
+
+出力：
+NGあり</div>
+        </div>
+
+        <div>
+          <h3>手順（Mojician）</h3>
+          <ol class="mini" style="margin:8px 0 0 18px;">
+            <li>テキストを貼り付ける</li>
+            <li>対象キーワード（複数可）を入力</li>
+            <li>削除 or 抽出を実行</li>
+          </ol>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-remove-contains"
+               onclick="gtag('event','tool_open',{tool:'remove_contains',from:'guide_pattern5'});">
+              ▶ 含む文字（削除/抽出）を使う
+            </a>
+            <a class="btn btn-ghost" href="/tool/remove-contains.html">もっと詳しく</a>
+          </div>
+          <p class="mini" style="margin-top:10px;">
+            複数キーワードを扱うときは、改行やカンマでまとめて指定すると楽です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 6 -->
+  <section id="pattern6">
+    <div class="card">
+      <h2>6. 行を昇順・降順に並び替えたい（ソート）</h2>
+      <p class="mini">
+        よくある作業：ID一覧や番号リストを並び替えて、チェックしやすくしたい（文字列/数値）。
+      </p>
+
+      <div class="grid2">
+        <div>
+          <h3>例（数値ソート・昇順）</h3>
+          <div class="example">入力：
+3
+10
+2
+1
+
+出力：
+1
+2
+3
+10</div>
+        </div>
+        <div>
+          <h3>手順（Mojician）</h3>
+          <ol class="mini" style="margin:8px 0 0 18px;">
+            <li>一覧を貼り付ける</li>
+            <li>昇順/降順、文字列/数値を選ぶ</li>
+            <li>並び替えてコピー</li>
+          </ol>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/#tool-sort-lines"
+               onclick="gtag('event','tool_open',{tool:'sort_lines',from:'guide_pattern6'});">
+              ▶ ソートを使う
+            </a>
+            <a class="btn btn-ghost" href="/tool/sort-lines.html">もっと詳しく</a>
+          </div>
+          <p class="mini" style="margin-top:10px;">
+            数値として並び替えると、<b>10</b> が <b>2</b> より先に来る問題を避けられます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips -->
+  <section id="tips">
+    <div class="card">
+      <h2>補足：AIに貼れないデータを整形するときの考え方</h2>
+      <p class="mini">
+        業務データや機密情報は、AIや外部サービスに貼り付けにくいことがあります。Mojicianは、入力内容を保存せず、ブラウザ内で処理する前提のツールです。
+      </p>
+
+      <div class="note">
+        <h3 style="margin-top:0;">安心して使うためのコツ</h3>
+        <ul style="margin:8px 0 0 18px;">
+          <li>個人情報や機密情報は、必要最小限にして加工する</li>
+          <li>加工後に不要になったデータは、貼り付け先へ移したら画面を閉じる</li>
+          <li>「要望を送る」から、欲しい機能や改善点を気軽に送る</li>
+        </ul>
+      </div>
+
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn btn-primary" href="/#tools"
+           onclick="gtag('event','nav_click',{to:'tools_list',from:'guide_tips'});">
+          ▶ 無料ツール一覧へ
+        </a>
+        <a class="btn btn-ghost" href="/request.html"
+           onclick="gtag('event','nav_click',{to:'request',from:'guide_tips'});">
+          💬 要望を送る
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="/contact.html">お問い合わせ</a>
+      <a href="/request.html">機能要望</a>
+      <a href="/guide.html">使い方ガイド</a>
+    </div>
+    <div style="margin-top:8px;">© Mojician</div>
+  </div>
+</footer>
+
+</body>
+</html>
