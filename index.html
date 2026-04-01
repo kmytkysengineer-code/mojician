@@ -784,8 +784,8 @@ cherry
             </label>
 
             <label style="display:flex; align-items:center; gap:6px;">
-              <input type="checkbox" id="commaSpace2">
-              (New!)改行→カンマ変換時に半角スペースを入れる
+              <input type="checkbox" id="commaSpace2" checked>
+              (New!) 改行→カンマ変換時に半角スペースを入れない
             </label>
           </div>
         </div>
@@ -835,6 +835,7 @@ cherry
 
       const trimSpaces = document.getElementById("trimSpaces2").checked;
       const removeEmpty = document.getElementById("removeEmpty2").checked;
+      const commaSpace = document.getElementById("commaSpace2").checked;
 
       items = items.map(x => trimSpaces ? x.trim() : x);
 
@@ -857,7 +858,7 @@ cherry
       }
       const items = normalizeItems2(raw, false);
       const commaSpace = document.getElementById("commaSpace2").checked;
-      const separator = commaSpace ? ", " : ",";
+      const separator = commaSpace ? "," : ", ";
       
       document.getElementById("outputText2").value = items.join(separator);
     }
@@ -875,7 +876,7 @@ cherry
     function clearTool2(){
       document.getElementById("inputText2").value = "";
       document.getElementById("outputText2").value = "";
-      document.getElementById("commaSpace2").checked = false;
+      document.getElementById("commaSpace2").checked = true;
     }
   </script>
 
