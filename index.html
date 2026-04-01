@@ -782,6 +782,11 @@ cherry
               <input type="checkbox" id="removeEmpty2" checked>
               空行・空要素を無視
             </label>
+
+            <label style="display:flex; align-items:center; gap:6px;">
+              <input type="checkbox" id="commaSpace2">
+              (New!)改行→カンマ変換時に半角スペースを入れる
+            </label>
           </div>
         </div>
 
@@ -851,7 +856,10 @@ cherry
         return;
       }
       const items = normalizeItems2(raw, false);
-      document.getElementById("outputText2").value = items.join(", ");
+      const commaSpace = document.getElementById("commaSpace2").checked;
+      const separator = commaSpace ? ", " : ",";
+      
+      document.getElementById("outputText2").value = items.join(separator);
     }
 
     function toNewline(){
@@ -867,6 +875,7 @@ cherry
     function clearTool2(){
       document.getElementById("inputText2").value = "";
       document.getElementById("outputText2").value = "";
+      document.getElementById("commaSpace2").checked = false;
     }
   </script>
 
